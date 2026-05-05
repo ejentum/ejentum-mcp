@@ -1,0 +1,25 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - ejentumApiKey
+    properties:
+      ejentumApiKey:
+        type: string
+        title: Ejentum API Key
+        description: Your Ejentum API key. Get one at https://ejentum.com/pricing (free tier available, 100 calls).
+      ejentumApiUrl:
+        type: string
+        title: Ejentum API URL (optional)
+        description: Override the default API endpoint. Leave blank to use production.
+        default: https://ejentum-main-ab125c3.zuplo.app/logicv1/
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['dist/index.js'],
+      env: {
+        EJENTUM_API_KEY: config.ejentumApiKey,
+        ...(config.ejentumApiUrl ? { EJENTUM_API_URL: config.ejentumApiUrl } : {})
+      }
+    })

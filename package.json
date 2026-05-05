@@ -1,0 +1,56 @@
+{
+  "name": "ejentum-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for the Ejentum Logic API. Exposes the four cognitive harnesses (reasoning, code, anti-deception, memory) as MCP tools any agentic client can call.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "ejentum-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test:smoke": "node tests/smoke.mjs",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ejentum",
+    "reasoning-harness",
+    "agentic-ai",
+    "cognitive-scaffold",
+    "anti-deception",
+    "code-review",
+    "anthropic",
+    "claude"
+  ],
+  "license": "MIT",
+  "author": "Ejentum <info@ejentum.com>",
+  "homepage": "https://ejentum.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejentum/ejentum-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ejentum/ejentum-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
