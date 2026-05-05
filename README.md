@@ -1,6 +1,8 @@
 # ejentum-mcp
 
 [![smithery badge](https://smithery.ai/badge/ejentum/ejentum-mcp)](https://smithery.ai/servers/ejentum/ejentum-mcp)
+[![Glama MCP server](https://img.shields.io/badge/glama-listed-blue)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
+[![mcp.so](https://img.shields.io/badge/mcp.so-listed-green)](https://mcp.so/server/ejentum-mcp/Ejentum)
 [![npm version](https://img.shields.io/npm/v/ejentum-mcp.svg)](https://www.npmjs.com/package/ejentum-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
