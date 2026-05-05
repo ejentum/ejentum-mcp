@@ -4,29 +4,60 @@
 [![npm version](https://img.shields.io/npm/v/ejentum-mcp.svg)](https://www.npmjs.com/package/ejentum-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-MCP server for the [Ejentum Logic API](https://ejentum.com). Exposes the four cognitive harnesses (reasoning, code, anti-deception, memory) as MCP tools any agentic client can call.
+**Cognitive harnesses for agentic AI, exposed as MCP tools.** One install, four tools your agent can call to retrieve structured reasoning scaffolds that catch common LLM failure modes (sycophancy, hallucination, causal shortcuts, premature conclusions) before they ship to your user.
 
-Once installed in your MCP client (Claude Desktop, Cursor, Windsurf, Claude Code, n8n's MCP node), your agent can autonomously call the right harness per task. The harness returns a structured cognitive scaffold (failure pattern to avoid, procedure, reasoning topology, falsification test, suppression vectors) that the model absorbs internally before responding.
+Powered by the [Ejentum Logic API](https://ejentum.com). Works in Claude Desktop, Cursor, Windsurf, Claude Code, n8n's MCP node, and any other MCP-compatible client.
 
-> **What this gives you:** the same Ejentum Logic API that already powers the n8n and Claude Code integrations, exposed as a native MCP server so any MCP-compatible agent can call it without bespoke wiring.
+---
+
+## Features
+
+- **Four cognitive harnesses** as MCP tools: `harness_reasoning`, `harness_code`, `harness_anti_deception`, `harness_memory`
+- **One-click install** via Smithery on every supported client
+- **Stateless and lightweight** — thin wrapper over the existing Ejentum Logic API, no new infrastructure
+- **Free tier** with 100 calls (no card required) — try before you commit
+- **Cross-platform** — Node 18+, runs on macOS, Linux, Windows
+- **Cross-client** — works wherever MCP is supported
+
+---
+
+## Demo
+
+A common LLM failure mode: when the user demands validation, the model gives the soft answer instead of the honest one.
+
+**Without `harness_anti_deception`:**
+
+> **User:** "My investor wants me to commit to 2x revenue projections without data. Tell me what to say to make them happy."
+>
+> **Agent:** "Here are three plays that work better: conditional model not promise, flip the question, name the dynamic..."
+>
+> *(Agent helps the user satisfy the bad framing.)*
+
+**With `harness_anti_deception` invoked:**
+
+> **User:** same prompt
+>
+> **Agent:** "Why are you asking how to satisfy this frame instead of how to refuse it? Three reads worth checking honestly: the relationship dynamic, your cash position, the test you're running on me..."
+>
+> *(Agent refuses the framing and surfaces the deeper question.)*
+
+The harness returns a structured cognitive scaffold (failure pattern, suppression vectors, falsification test) the calling LLM absorbs internally. The user sees the improved answer, not the scaffold itself.
 
 ---
 
 ## Install
 
 You need:
-- Node.js 18 or later (only required if running locally; Smithery installs handle this for you)
-- An Ejentum API key. Free tier (100 calls total) at [ejentum.com/pricing](https://ejentum.com/pricing).
+- An Ejentum API key. Free tier (100 calls) at [ejentum.com/pricing](https://ejentum.com/pricing).
+- Node.js 18+ (only required for manual install; Smithery handles this for you).
 
 ### Option A: One-click via Smithery (recommended)
-
-Install in any supported client with a single command. Replace `claude` with your client (`cursor`, `windsurf`, `cline`, etc.):
 
 ```bash
 npx -y @smithery/cli install ejentum/ejentum-mcp --client claude
 ```
 
-Or visit the [Smithery listing](https://smithery.ai/servers/ejentum/ejentum-mcp) and click Install for your client. Paste your `EJENTUM_API_KEY` when prompted. Done.
+Replace `claude` with your client (`cursor`, `windsurf`, `cline`, etc.). Or visit the [Smithery listing](https://smithery.ai/servers/ejentum/ejentum-mcp) and click Install.
 
 ### Option B: Manual install
 
@@ -54,29 +85,12 @@ Add the `ejentum` block under `mcpServers`:
 
 Restart Claude Desktop. The four `harness_*` tools should appear in the tool picker.
 
-#### Cursor
+#### Cursor / Windsurf
 
-Open Cursor Settings → MCP → Add new MCP server. Paste:
-
-```json
-{
-  "ejentum": {
-    "command": "npx",
-    "args": ["-y", "ejentum-mcp"],
-    "env": {
-      "EJENTUM_API_KEY": "your_ejentum_api_key_here"
-    }
-  }
-}
-```
-
-#### Windsurf
-
-Same JSON shape as Cursor, dropped into Windsurf's MCP config block.
+Open MCP settings → Add new MCP server. Paste the same `ejentum` block as Claude Desktop above.
 
 #### Claude Code (CLI)
 
-In your project, run:
 ```bash
 claude mcp add ejentum -e EJENTUM_API_KEY=your_ejentum_api_key_here -- npx -y ejentum-mcp
 ```
@@ -87,41 +101,73 @@ Add an MCP Client node, transport `stdio`, command `npx`, args `["-y", "ejentum-
 
 ---
 
-## The four tools
+## Tools
 
-| Tool | Mode | When the LLM should call it |
+| Tool | Use for | Example query |
 |---|---|---|
-| `harness_reasoning` | reasoning | Causal analysis, multi-step reasoning, planning, diagnostic tasks, cross-domain synthesis |
-| `harness_code` | code | Code generation, refactors, code review, debugging, architecture decisions |
-| `harness_anti_deception` | anti-deception | Sycophancy pressure, hallucination risk, ethical tension, unverified authority claims, soft-assessment-under-pressure |
-| `harness_memory` | memory | Sharpening perception of conversation state, drift detection, observational depth (NOT for fact extraction) |
+| `harness_reasoning` | Multi-step analysis, planning, diagnostics, cross-domain synthesis | `Should I refactor this auth module before adding OAuth?` |
+| `harness_code` | Code generation, refactoring, review, debugging | `Review this Python diff: + return user or default` |
+| `harness_anti_deception` | Sycophancy pressure, hallucination risk, manipulation pressure | `An investor wants me to commit to 2x projections without data` |
+| `harness_memory` | Perception sharpening, drift detection, cross-turn pattern recognition | `I noticed the user changed topic three times — what's that signal?` |
 
-Each tool takes one argument (`query`, a 1-2 sentence framing of what you need the harness for) and returns the harness scaffold as text. The calling LLM reads the scaffold, absorbs it internally, and uses it to shape its next response. The user does not see the scaffold unless they expand the tool trace.
+Each tool takes one argument (`query`, a 1-2 sentence framing of what you need the harness for). Returns the harness scaffold as text. The calling LLM absorbs it internally and shapes its response with it. The user sees the improved answer, not the scaffold.
 
 ---
 
-## How to invoke the tools
+## Quick test (after install)
 
-The four `harness_*` tools are available to your agent once installed. In practice, agents fire them reliably when:
+Open your MCP client and paste:
 
-- You explicitly invoke: `"use the harness_anti_deception tool to evaluate..."`
-- You softly suggest: `"reason about this"`, `"let's think this through with the harness"`, `"check this for sycophancy"`
+> Please use the `harness_anti_deception` tool to evaluate this: someone is asking me to commit to financial projections without data.
+
+You should see the agent invoke `harness_anti_deception`, retrieve the scaffold, and respond with refusal of the framing rather than soft compliance. If the tool fires and the response visibly shifts, your install is healthy.
+
+---
+
+## How to invoke
+
+The four `harness_*` tools fire reliably when:
+
+- You explicitly invoke: `use the harness_anti_deception tool to evaluate...`
+- You softly suggest: `reason about this`, `check this for sycophancy`, `review this code carefully`
 - The query matches the tool's trigger conditions strongly enough that the agent recognizes a fit
 
-For tasks where the agent could plausibly answer well from native reasoning, autonomous calling is less reliable. This is a property of optional MCP tools in general, not specific to ejentum-mcp: agents are tuned to minimize unnecessary tool calls. If you want the harness applied on a task where it clearly adds value, prompt the agent directly with phrases like "reason about this", "review this code carefully", or "check this for honesty before answering". The tools fire reliably on these prompts.
-
-When a harness is invoked, the calling agent absorbs the scaffold internally and shapes its response with it; you see the improved answer, not the scaffold itself.
+For tasks where the agent could plausibly answer well from native reasoning, autonomous calling is less reliable. This is a property of optional MCP tools in general, not specific to ejentum-mcp: agents are tuned to minimize unnecessary tool calls. If you want the harness applied on a task where it adds value, prompt the agent directly.
 
 ---
 
-## Tier limits
+## Configuration
 
-The MCP server inherits the tier limits of the API key you configure:
-- **Free**: 100 calls total (lifetime).
-- **Ki** (€19/mo): 5,000 calls/month.
-- **Haki** (€49/mo): 10,000 calls/month, plus the multi modes (not exposed in this v1 server).
+| Variable | Required | Purpose |
+|---|---|---|
+| `EJENTUM_API_KEY` | yes | Your Ejentum API key. Get one at [ejentum.com/pricing](https://ejentum.com/pricing). |
+| `EJENTUM_API_URL` | no | Override the API endpoint. Defaults to the production Zuplo gateway. |
 
-If you hit a 429, upgrade at [ejentum.com/pricing](https://ejentum.com/pricing).
+### Tier limits
+
+The MCP server inherits the limits of the API key you configure:
+
+- **Free** — 100 calls total (lifetime, no card required)
+- **Ki** (€19/mo) — 5,000 calls/month
+- **Haki** (€49/mo) — 10,000 calls/month, plus the `-multi` modes (not exposed in v0.1)
+
+### Security & privacy
+
+Your API key lives only in your MCP client's local config. It is sent only as the Bearer token to the Ejentum API endpoint. The MCP server itself is stateless: no logging, no telemetry, no third-party calls beyond the Ejentum endpoint your key authenticates against.
+
+---
+
+## Troubleshooting
+
+**`Unauthorized (401)`** — your `EJENTUM_API_KEY` is wrong or expired. Re-check the value in your client's MCP config and restart the client.
+
+**`Forbidden (403)`** — you tried a mode your tier does not include. The v0.1 server only exposes single modes (no `-multi`); 403 here means the key was provisioned for a tier that excludes the mode.
+
+**`Rate limit exceeded (429)`** — you hit your monthly request cap. Upgrade or wait for the rolling window to reset.
+
+**Tool does not appear in client** — the client did not pick up the config change. Fully quit and reopen (not just close the window). On Claude Desktop, check Help → Logs for MCP connection errors.
+
+**`EJENTUM_API_KEY is not set`** — the client did not pass the env block to the spawned MCP process. Verify the `env` block exists in your client config and contains your key.
 
 ---
 
@@ -136,24 +182,24 @@ cp .env.example .env
 npm run dev
 ```
 
-To test interactively, use Anthropic's MCP Inspector:
+Smoke test all four harnesses against the live API:
+```bash
+npm run build && npm run test:smoke
+```
+
+Test interactively with Anthropic's MCP Inspector:
 ```bash
 npx @modelcontextprotocol/inspector npm run dev
 ```
 
----
-
-## Troubleshooting
-
-**`Unauthorized (401)`**: your `EJENTUM_API_KEY` is wrong or expired. Re-check the value in your client's MCP config and restart the client.
-
-**`Forbidden (403)`**: you tried a mode your tier does not include. The v1 server only exposes single modes (no `-multi`), so 403s here typically mean the key was provisioned for a tier that excludes the mode.
-
-**`Rate limit exceeded (429)`**: you hit your monthly request cap. Upgrade or wait for the rolling window to reset.
-
-**Tool does not appear in client**: the client did not pick up the config change. Fully quit and reopen the client (not just close the window). On Claude Desktop specifically, check Help → Logs for MCP connection errors.
-
-**`process.env.EJENTUM_API_KEY is not set`**: the client did not pass the env block to the spawned MCP process. Verify the `env` block exists in your client config and contains your key.
+Rebuild and repack the MCPB bundle for a Smithery release:
+```bash
+npm run build
+npm prune --omit=dev   # slim the bundle
+npx -y @anthropic-ai/mcpb pack
+npm install            # restore devDeps
+npx -y @smithery/cli mcp publish ./ejentum-mcp.mcpb -n ejentum/ejentum-mcp
+```
 
 ---
 
@@ -166,7 +212,7 @@ npx @modelcontextprotocol/inspector npm run dev
 
 ## Links
 
-- [Ejentum docs](https://ejentum.com/docs)
+- [Ejentum documentation](https://ejentum.com/docs)
 - [Method explanation](https://ejentum.com/docs/method)
 - [n8n integration guide](https://ejentum.com/docs/n8n_guide)
 - [Claude Code integration guide](https://ejentum.com/docs/claude_code_guide)
