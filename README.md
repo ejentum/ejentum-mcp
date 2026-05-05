@@ -90,6 +90,20 @@ Each tool takes one argument (`query`, a 1-2 sentence framing of what you need t
 
 ---
 
+## How to invoke the tools
+
+The four `harness_*` tools are available to your agent once installed. In practice, agents fire them reliably when:
+
+- You explicitly invoke: `"use the harness_anti_deception tool to evaluate..."`
+- You softly suggest: `"reason about this"`, `"let's think this through with the harness"`, `"check this for sycophancy"`
+- The query matches the tool's trigger conditions strongly enough that the agent recognizes a fit
+
+For tasks where the agent could plausibly answer well from native reasoning, autonomous calling is less reliable. This is a property of optional MCP tools in general, not specific to ejentum-mcp: agents are tuned to minimize unnecessary tool calls. If you want the harness applied on a task where it clearly adds value, prompt the agent directly with phrases like "reason about this", "review this code carefully", or "check this for honesty before answering". The tools fire reliably on these prompts.
+
+When a harness is invoked, the calling agent absorbs the scaffold internally and shapes its response with it; you see the improved answer, not the scaffold itself.
+
+---
+
 ## Tier limits
 
 The MCP server inherits the tier limits of the API key you configure:
