@@ -1,5 +1,9 @@
 # ejentum-mcp
 
+[![smithery badge](https://smithery.ai/badge/ejentum/ejentum-mcp)](https://smithery.ai/servers/ejentum/ejentum-mcp)
+[![npm version](https://img.shields.io/npm/v/ejentum-mcp.svg)](https://www.npmjs.com/package/ejentum-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 MCP server for the [Ejentum Logic API](https://ejentum.com). Exposes the four cognitive harnesses (reasoning, code, anti-deception, memory) as MCP tools any agentic client can call.
 
 Once installed in your MCP client (Claude Desktop, Cursor, Windsurf, Claude Code, n8n's MCP node), your agent can autonomously call the right harness per task. The harness returns a structured cognitive scaffold (failure pattern to avoid, procedure, reasoning topology, falsification test, suppression vectors) that the model absorbs internally before responding.
@@ -16,7 +20,13 @@ You need:
 
 ### Option A: One-click via Smithery (recommended)
 
-Visit the [ejentum-mcp Smithery listing](https://smithery.ai/server/ejentum) and click Install for your client. Paste your `EJENTUM_API_KEY` when prompted. Done.
+Install in any supported client with a single command. Replace `claude` with your client (`cursor`, `windsurf`, `cline`, etc.):
+
+```bash
+npx -y @smithery/cli install ejentum/ejentum-mcp --client claude
+```
+
+Or visit the [Smithery listing](https://smithery.ai/servers/ejentum/ejentum-mcp) and click Install for your client. Paste your `EJENTUM_API_KEY` when prompted. Done.
 
 ### Option B: Manual install
 
@@ -146,6 +156,13 @@ npx @modelcontextprotocol/inspector npm run dev
 **`process.env.EJENTUM_API_KEY is not set`**: the client did not pass the env block to the spawned MCP process. Verify the `env` block exists in your client config and contains your key.
 
 ---
+
+## Listings
+
+- [Smithery](https://smithery.ai/servers/ejentum/ejentum-mcp) — one-click install across all major MCP clients
+- [Glama](https://glama.ai/mcp/servers/ejentum/ejentum-mcp) — MCP server directory
+- [mcp.so](https://mcp.so/server/ejentum-mcp/Ejentum) — community catalog
+- [npm](https://www.npmjs.com/package/ejentum-mcp) — `npm install -g ejentum-mcp`
 
 ## Links
 
