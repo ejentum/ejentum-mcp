@@ -2,8 +2,8 @@
   "manifest_version": "0.2",
   "name": "ejentum-mcp",
   "display_name": "Ejentum",
-  "version": "0.1.2",
-  "description": "Four cognitive harnesses (reasoning, code, anti-deception, memory) as MCP tools any agentic client can call.",
+  "version": "0.1.3",
+  "description": "Catch LLM failure modes (sycophancy, hallucination, causal shortcuts, reasoning decay) before they ship. Four cognitive harnesses (reasoning, code, anti-deception, memory) as MCP tools any agentic client can call.",
   "long_description": "Drop-in cognitive scaffolding for agentic AI. Exposes the four Ejentum harnesses as MCP tools your agent calls per task: harness_reasoning (causal analysis, multi-step planning), harness_code (generation, refactor, review), harness_anti_deception (sycophancy, hallucination, manipulation pressure), harness_memory (perception, drift detection). Each tool returns a structured cognitive scaffold (failure pattern to avoid, procedure, suppression vectors, falsification test) that the calling LLM absorbs internally before responding. Catches LLM failure modes that produce confidently wrong answers.",
   "author": {
     "name": "Ejentum",
