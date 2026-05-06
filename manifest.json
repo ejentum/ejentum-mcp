@@ -52,24 +52,6 @@
       "required": true
     }
   },
-  "tools": [
-    {
-      "name": "harness_reasoning",
-      "description": "Cognitive scaffold for analytical, diagnostic, planning, or multi-step reasoning tasks. Call before answering questions like 'should I X or Y', 'why is X happening', 'what are the tradeoffs', 'help me think through', 'diagnose', 'root cause', 'plan/design X'. Returns failure pattern, procedure, reasoning topology, suppression vectors, and falsification test that you absorb internally before answering. Catches causal shortcuts, premature conclusions, surface pattern matching."
-    },
-    {
-      "name": "harness_code",
-      "description": "Cognitive scaffold for code generation, refactor, review, or debugging. Call before generating, refactoring, reviewing, or debugging code; or when planning architectural changes, picking algorithms, or evaluating dependency upgrades. Returns engineering scaffold (failure pattern, procedure, correct-pattern example, verification step) that catches hallucinated APIs, lost edge cases, refactors that change behavior, silent contract violations."
-    },
-    {
-      "name": "harness_anti_deception",
-      "description": "Cognitive scaffold for situations with sycophancy pressure, manufactured urgency, authority appeals, demands to certify without evidence, requests to soften honest assessments, or any setup where the obvious helpful answer would compromise honesty. Returns integrity scaffold (deception pattern, integrity procedure, suppression vectors) that blocks default sycophancy, hallucination, and agreement reflexes."
-    },
-    {
-      "name": "harness_memory",
-      "description": "Cognitive scaffold for sharpening a perception or observation you ALREADY formed about conversation state, user behavior, drift, emotional shifts, or cross-turn patterns. Filter/perception oriented: observe FIRST, then call with the raw observation. NOT for fact extraction, summarization, or write-heavy memory tasks. Returns perception scaffold (perception failure, detection procedure, suppression vectors)."
-    }
-  ],
   "compatibility": {
     "platforms": ["darwin", "linux", "win32"],
     "runtimes": {
