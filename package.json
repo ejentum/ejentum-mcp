@@ -1,7 +1,7 @@
 {
   "name": "ejentum-mcp",
-  "version": "0.1.3",
-  "description": "Catch LLM failure modes (sycophancy, hallucination, causal shortcuts, reasoning decay) before they ship. Four cognitive harnesses (reasoning, code, anti-deception, memory) as MCP tools any agentic client can call. One install, works in Claude Desktop, Cursor, Windsurf, Claude Code, n8n.",
+  "version": "0.1.4",
+  "description": "RAG augments knowledge. Ejentum augments reasoning. Four cognitive harnesses (reasoning, code, anti-deception, memory) spanning 679 engineered abilities, matched per task and served as MCP tools. Each call returns a structured scaffold the LLM absorbs before its first token, catching the shortcuts that ship as confidently-wrong answers.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
