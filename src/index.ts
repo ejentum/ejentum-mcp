@@ -49,7 +49,7 @@ const querySchema = {
 
 const server = new McpServer({
   name: "ejentum",
-  version: "0.1.1",
+  version: "0.1.2",
 });
 
 for (const harness of HARNESSES) {
