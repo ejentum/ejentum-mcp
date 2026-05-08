@@ -49,4 +49,4 @@ Free tier: 100 calls, no card. Get a key at https://ejentum.com/pricing.
 
 ## Source
 
-These files are the skill bundle distributed at `ejentum.com/guides/claude_code/ejentum_skills.zip`, extracted as their own directory in this repo for review and reproducibility. The canonical install walkthrough (with screenshots and a three-turn demo proving all four harnesses route autonomously) is at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
+These files are the skill bundle distributed at [ejentum.com/wp-content/themes/ejentum/guides/claude_code/ejentum_skills.zip](https://ejentum.com/wp-content/themes/ejentum/guides/claude_code/ejentum_skills.zip), extracted as their own directory in this repo for review and reproducibility. The canonical install walkthrough (with screenshots and a three-turn demo proving all four harnesses route autonomously) is at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide), which also links the ZIP directly so end users do not need to memorize the WordPress theme path.
