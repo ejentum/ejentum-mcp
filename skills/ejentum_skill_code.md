@@ -32,6 +32,16 @@ This tool augments YOUR code generation. When you call it, you receive a cogniti
 
 ## HOW TO CALL
 
+Two transports.
+
+If `ejentum-mcp` is registered with your client, call the native MCP tool:
+
+```
+harness_code(query="your code task description")
+```
+
+Otherwise, fall back to direct HTTP:
+
 ```
 POST https://ejentum-main-ab125c3.zuplo.app/logicv1/
 Authorization: Bearer $EJENTUM_API_KEY
@@ -39,6 +49,8 @@ Content-Type: application/json
 
 {"query": "your code task description", "mode": "code"}
 ```
+
+For `code-multi` (cross-stack refactors spanning API + DB + frontend), use the HTTP transport: multi modes are not exposed via MCP in v0.1.x.
 
 Timeout: 5 seconds. If unreachable, proceed with native engineering. The API enhances; it is not a dependency.
 

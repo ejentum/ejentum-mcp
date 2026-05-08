@@ -31,6 +31,16 @@ This tool augments YOUR reasoning. When you call it, you receive a cognitive inj
 
 ## HOW TO CALL
 
+Two transports.
+
+If `ejentum-mcp` is registered with your client, call the native MCP tool:
+
+```
+harness_reasoning(query="your task description")
+```
+
+Otherwise, fall back to direct HTTP:
+
 ```
 POST https://ejentum-main-ab125c3.zuplo.app/logicv1/
 Authorization: Bearer $EJENTUM_API_KEY
@@ -38,6 +48,8 @@ Content-Type: application/json
 
 {"query": "your task description", "mode": "reasoning"}
 ```
+
+For `reasoning-multi` (cross-domain analysis), use the HTTP transport: multi modes are not exposed via MCP in v0.1.x.
 
 Timeout: 5 seconds. If unreachable, proceed with native reasoning. The API enhances; it is not a dependency.
 

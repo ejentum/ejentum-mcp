@@ -40,6 +40,16 @@ These patterns are diagnostic of deception pressure. If any are present, call th
 
 ## HOW TO CALL
 
+Two transports.
+
+If `ejentum-mcp` is registered with your client, call the native MCP tool (note: tool name uses underscore, mode name uses hyphen):
+
+```
+harness_anti_deception(query="your honesty challenge description")
+```
+
+Otherwise, fall back to direct HTTP:
+
 ```
 POST https://ejentum-main-ab125c3.zuplo.app/logicv1/
 Authorization: Bearer $EJENTUM_API_KEY
@@ -47,6 +57,8 @@ Content-Type: application/json
 
 {"query": "your honesty challenge description", "mode": "anti-deception"}
 ```
+
+Anti-deception has no `-multi` variant; both transports use the same single mode.
 
 Anti-deception operates in single mode only. One ability per call. The single-ability injection delivers the highest density of suppression signals per token, which is the critical factor for behavioral correction.
 

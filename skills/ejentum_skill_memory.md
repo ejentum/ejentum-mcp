@@ -38,6 +38,16 @@ These patterns are diagnostic. If any are present, call the API even if the conv
 
 ## HOW TO CALL
 
+Two transports.
+
+If `ejentum-mcp` is registered with your client, call the native MCP tool:
+
+```
+harness_memory(query="I noticed [X]. Sharpen: [Y].")
+```
+
+Otherwise, fall back to direct HTTP:
+
 ```
 POST https://ejentum-main-ab125c3.zuplo.app/logicv1/
 Authorization: Bearer $EJENTUM_API_KEY
@@ -45,6 +55,8 @@ Content-Type: application/json
 
 {"query": "your observation description", "mode": "memory"}
 ```
+
+For `memory-multi` (cross-domain perception across emotional + cognitive + behavioral signals), use the HTTP transport: multi modes are not exposed via MCP in v0.1.x.
 
 Timeout: 5 seconds. If unreachable, proceed with your current perception. The API enhances; it is not a dependency.
 

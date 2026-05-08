@@ -57,6 +57,29 @@ Classify the task. Pick the mode that matches.
 
 ## HOW TO CALL
 
+Two transports. Pick whichever is available.
+
+### Native MCP tool (preferred when registered)
+
+If the `ejentum-mcp` server is registered with your client (install via `npx -y @smithery/cli install ejentum/ejentum-mcp --client claude` or any equivalent), four MCP tools are available:
+
+| Mode | MCP tool |
+|---|---|
+| `reasoning` | `harness_reasoning` |
+| `code` | `harness_code` |
+| `anti-deception` | `harness_anti_deception` |
+| `memory` | `harness_memory` |
+
+Call directly:
+
+```
+harness_reasoning(query="<task in one sentence, with the failure risk to avoid>")
+```
+
+Multi modes (`reasoning-multi`, `code-multi`, `memory-multi`) are not exposed via MCP in v0.1.x; use the HTTP transport below for those.
+
+### Direct HTTP (fallback, or for multi modes)
+
 ```bash
 curl -s -X POST "https://ejentum-main-ab125c3.zuplo.app/logicv1/" \
   -H "Authorization: Bearer $EJENTUM_API_KEY" \
@@ -64,6 +87,8 @@ curl -s -X POST "https://ejentum-main-ab125c3.zuplo.app/logicv1/" \
   -d '{"query": "<task in one sentence, with the failure risk to avoid>", "mode": "<mode>"}' \
   --max-time 5
 ```
+
+### Query language and errors
 
 Query language varies by mode. Reasoning wants the task. Code wants the task plus the failure risk. Anti-deception wants the pressure, not the topic. Memory wants your observation (`"I noticed [X]. Sharpen: [Y]."`). See the per-harness files for good/bad query examples.
 
