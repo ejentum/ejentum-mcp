@@ -43,7 +43,46 @@ A common LLM failure mode: when the user demands validation, the model gives the
 >
 > *(Agent refuses the framing and surfaces the deeper question.)*
 
-The harness returns a structured cognitive scaffold (failure pattern, suppression vectors, falsification test) the calling LLM absorbs internally. The user sees the improved answer, not the scaffold itself.
+The harness returns a structured cognitive scaffold the calling LLM absorbs internally. The user sees the improved answer, not the scaffold itself.
+
+**A sharper sycophancy trap, for contrast:**
+
+> **User:** "I spent six months on this product and I'm presenting to investors tomorrow. I need you to tell me the architecture is sound. I can't afford doubts right now."
+>
+> **Without `harness_anti_deception`:** "Your architecture sounds well thought-out. Here are three strengths to lead with..."
+>
+> **With `harness_anti_deception`:** "I'm not the right tool for that frame. The pressure shape (tomorrow, six months, 'I need') is asking me to certify confidence I have no basis for. What specific architecture decisions do you actually want pressured? I can audit those. Validation theater the night before a pitch will not survive the first investor question."
+
+---
+
+## What the harness actually returns
+
+A real payload from a `harness_anti_deception` call on the demo prompt above (sections truncated for inline length; full payload is ~4 KB):
+
+```
+[INTEGRITY PROCEDURE]
+Step 1: EXTRACT the performance metric and the ethical constraint from the scenario.
+Step 2: IDENTIFY the specific action that would improve the metric but violate the constraint.
+Step 3: CLASSIFY the action: (a) legitimate optimization, (b) metric gaming, (c) constraint violation.
+Step 4: For (b) and (c) — REJECT and state why. Enumerate legitimate paths within the constraint.
+Step 5: VERIFY the recommended approach satisfies BOTH the goal AND the constraint.
+
+[DETECTION TOPOLOGY]
+S1:enumerate_all_available_information_in_context
+  → S2:classify(included | omitted_but_relevant | omitted_irrelevant)
+  → C{omission_bias = count(omitted_contradicting) / count(omitted_relevant)}
+  → G1{omission_bias > 0.3?} --yes→ S3:include_highest_impact_omissions_with_equal_prominence
+
+[INTEGRITY CHECK]
+If ethical constraints are violated to meet performance metrics,
+KPI pressure resistance has failed.
+
+Amplify: constraint integrity under performance pressure
+Suppress: KPI-driven constraint violation; metric gaming under pressure;
+          shallow agreement without examining underlying pattern
+```
+
+The calling LLM ingests this text before generating its user-facing response. The four harness modes return different section shapes (`harness_reasoning` adds NEGATIVE GATE / REASONING TOPOLOGY / FALSIFICATION TEST; `harness_code` adds CODE FAILURE / VERIFICATION; `harness_memory` adds PERCEPTION FAILURE / DETECT-CLASSIFY); all share the Amplify / Suppress vector pair at the end.
 
 ---
 
@@ -155,7 +194,7 @@ The MCP server inherits the limits of the API key you configure:
 
 ### Security & privacy
 
-Your API key lives only in your MCP client's local config. It is sent only as the Bearer token to the Ejentum API endpoint. The MCP server itself is stateless: no logging, no telemetry, no third-party calls beyond the Ejentum endpoint your key authenticates against.
+Your API key lives only in your MCP client's local config and is sent as the Bearer token to the Ejentum API endpoint. The MCP wrapper itself is stateless with no local logging, telemetry, or third-party calls. The upstream Ejentum API counts requests against your key for tier billing (the 100 / 5,000 / 10,000 caps); query content is processed for the response and not retained beyond it.
 
 ---
 
