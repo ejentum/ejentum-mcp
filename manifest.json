@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "ejentum-mcp",
   "display_name": "Ejentum",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "RAG augments knowledge. Ejentum augments reasoning. Four cognitive harnesses (reasoning, code, anti-deception, memory) spanning 679 engineered abilities, matched per task and served as MCP tools. Each call returns a structured scaffold the LLM absorbs before its first token, catching the shortcuts that ship as confidently-wrong answers.",
   "long_description": "RAG augments knowledge. Ejentum augments reasoning. The Logic API exposes 679 engineered cognitive abilities across four harnesses, retrieved per task and served as MCP tools your agent calls per turn. The Reasoning Harness (311 abilities) channels analytical depth across six failure dimensions: causal, temporal, spatial, simulation, abstraction, metacognition. The Code Harness (128 abilities) channels engineering discipline across 13 sub-domains including architecture, debugging, security, agent safety, and resilience. The Anti-Deception Harness (139 abilities) channels honesty under pressure: anti-sycophancy, anti-hallucination, anti-deception, anti-adversarial, anti-evasion, anti-judgment. The Memory Harness (101 abilities) channels observational depth: interpersonal perception, signal detection, risk awareness, self-monitoring, decision timing, memory ops. Each call returns a structured scaffold (failure pattern to avoid, procedure to follow, suppression vectors that block the shortcut) the LLM absorbs before its first token. Catches sycophancy, hallucination, causal shortcuts, and reasoning decay at the moment they would otherwise emerge, not after the damage is done.",
   "author": {
