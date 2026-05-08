@@ -1,10 +1,11 @@
 # ejentum-mcp
 
-[![smithery badge](https://smithery.ai/badge/ejentum/ejentum-mcp)](https://smithery.ai/servers/ejentum/ejentum-mcp)
-[![Glama MCP server](https://img.shields.io/badge/glama-listed-blue)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
-[![mcp.so](https://img.shields.io/badge/mcp.so-listed-green)](https://mcp.so/server/ejentum-mcp/Ejentum)
 [![npm version](https://img.shields.io/npm/v/ejentum-mcp.svg)](https://www.npmjs.com/package/ejentum-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node](https://img.shields.io/node/v/ejentum-mcp.svg)](https://nodejs.org)
+[![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.ejentum%2Fejentum--mcp-blue)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.ejentum/ejentum-mcp)
+[![Glama score](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/score.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
+[![Last commit](https://img.shields.io/github/last-commit/ejentum/ejentum-mcp.svg)](https://github.com/ejentum/ejentum-mcp/commits/main)
 
 **Cognitive harnesses for agentic AI, exposed as MCP tools.** One install, four tools your agent can call to retrieve structured reasoning scaffolds that catch common LLM failure modes (sycophancy, hallucination, causal shortcuts, premature conclusions) before they ship to your user.
 
