@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "ejentum-mcp",
   "display_name": "Ejentum",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "RAG augments knowledge. Ejentum augments reasoning. Four cognitive harnesses (reasoning, code, anti-deception, memory) spanning 679 engineered abilities, matched per task and served as MCP tools. Each call returns a structured scaffold the LLM absorbs before its first token, catching the shortcuts that ship as confidently-wrong answers.",
   "long_description": "RAG augments knowledge. Ejentum augments reasoning. Four MCP tools (harness_reasoning, harness_code, harness_anti_deception, harness_memory) wrap the Ejentum Logic API, which retrieves the most-relevant cognitive operation from a catalog of 679 (Reasoning 311 / Code 128 / Anti-Deception 139 / Memory 101) per task. Each call returns a structured scaffold the calling LLM absorbs before its first token: a named failure pattern, a procedure to follow, suppression vectors that block the shortcut, a falsification test for self-checking. Catches sycophancy, hallucination, causal shortcuts, and reasoning decay at the moment they would otherwise emerge. Stdio transport, Bearer auth via EJENTUM_API_KEY, free tier 100 calls.",
   "author": {
