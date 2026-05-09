@@ -1,0 +1,23 @@
+{
+  "name": "ejentum",
+  "description": "Reasoning Harness for agentic AI: 4 cognitive operating modes (reasoning, code, anti-deception, memory) over 679 engineered cognitive operations served as MCP tools. Each call returns a structured scaffold the calling LLM ingests before its first token, catching sycophancy, hallucination, causal shortcuts, and reasoning decay in production agent loops.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Ejentum",
+    "email": "info@ejentum.com",
+    "url": "https://ejentum.com"
+  },
+  "homepage": "https://ejentum.com",
+  "repository": "https://github.com/ejentum/ejentum-mcp",
+  "license": "MIT",
+  "keywords": [
+    "reasoning-harness",
+    "agentic-ai",
+    "mcp",
+    "anti-deception",
+    "cognitive-scaffold",
+    "anthropic",
+    "claude",
+    "agent-reliability"
+  ]
+}
