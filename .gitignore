@@ -5,3 +5,4 @@ dist/
 *.log
 *.mcpb
 .DS_Store
+.claude/
