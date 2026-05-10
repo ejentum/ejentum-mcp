@@ -1,0 +1,34 @@
+{
+  "name": "ejentum",
+  "version": "0.1.0",
+  "description": "Reasoning Harness for agentic AI: library of 679 cognitive operations engineered in natural language across four harnesses (reasoning, code, anti-deception, memory). Each call retrieves a task-matched scaffold (failure pattern, executable procedure, suppression vectors, falsification test) the agent ingests before responding. Addresses attention decay, sycophantic collapse, hallucination drift, and reasoning decay in long agent loops.",
+  "author": {
+    "name": "Ejentum",
+    "email": "info@ejentum.com",
+    "url": "https://ejentum.com"
+  },
+  "homepage": "https://ejentum.com",
+  "repository": "https://github.com/ejentum/ejentum-mcp",
+  "license": "MIT",
+  "keywords": [
+    "reasoning-harness",
+    "agentic-ai",
+    "mcp",
+    "anti-deception",
+    "cognitive-scaffold",
+    "openai",
+    "codex",
+    "agent-reliability"
+  ],
+  "mcpServers": "../.mcp.json",
+  "skills": "../skills",
+  "interface": {
+    "displayName": "Ejentum Reasoning Harness",
+    "shortDescription": "Cognitive scaffold tools (reasoning, code, anti-deception, memory) callable via MCP",
+    "longDescription": "Library of 679 cognitive operations engineered in natural language, organized across four harnesses. Each harness call retrieves a task-matched scaffold rather than serving a fixed template: a named failure pattern, an executable procedure, suppression vectors that block the obvious shortcut, and a falsification test for self-verification. The agent ingests the scaffold and writes from it. Free tier: 100 calls, no card.",
+    "developerName": "Ejentum",
+    "category": "agent-reliability",
+    "websiteURL": "https://ejentum.com",
+    "privacyPolicyURL": "https://ejentum.com/legal"
+  }
+}

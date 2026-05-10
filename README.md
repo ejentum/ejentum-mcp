@@ -13,6 +13,17 @@ Powered by the [Ejentum Logic API](https://ejentum.com). Works in Claude Desktop
 
 > **For Claude Code users specifically:** this repo doubles as a [Claude Code plugin](https://code.claude.com/docs/en/plugins). It ships with `.claude-plugin/plugin.json`, four auto-routed skills under `skills/<mode>/SKILL.md`, and an `.mcp.json` that pre-configures the `ejentum-mcp` MCP server install. Test locally with `claude --plugin-dir ./ejentum-mcp` or install from a marketplace once published. The legacy [`skills/ejentum_skill_*.md`](./skills/) files (workspace-drop format) remain available alongside, distributed via the website ZIP. Walkthrough at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
 
+> **For OpenAI Codex CLI users:** this repo also ships [`.codex-plugin/plugin.json`](./.codex-plugin/plugin.json) so it's plugin-ready for the upcoming Codex Plugin Directory. Today, install via `~/.codex/config.toml`:
+>
+> ```toml
+> [mcp_servers.ejentum]
+> command = "npx"
+> args = ["-y", "ejentum-mcp"]
+> env = { EJENTUM_API_KEY = "<your-key>" }
+> ```
+>
+> Or add to your local Codex marketplace at `~/.agents/plugins/marketplace.json` referencing this repo.
+
 ---
 
 ## Features
