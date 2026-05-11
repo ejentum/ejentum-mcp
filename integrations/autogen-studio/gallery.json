@@ -1,0 +1,49 @@
+{
+  "id": "ejentum_reasoning_harness",
+  "name": "Ejentum Reasoning Harness",
+  "url": "https://raw.githubusercontent.com/ejentum/ejentum-mcp/main/integrations/autogen-studio/gallery.json",
+  "metadata": {
+    "author": "Ejentum",
+    "version": "0.1.0",
+    "description": "Library of 679 cognitive operations engineered in natural language across four harnesses (reasoning, code, anti-deception, memory). Each harness call retrieves a task-matched scaffold the agent ingests before responding. Exposed to AutoGen Studio as a single McpWorkbench wrapping the ejentum-mcp stdio MCP server.",
+    "tags": [
+      "reasoning-harness",
+      "agent-reliability",
+      "anti-deception",
+      "cognitive-scaffold",
+      "mcp"
+    ],
+    "license": "MIT",
+    "homepage": "https://ejentum.com",
+    "category": "agent-reliability"
+  },
+  "components": {
+    "agents": [],
+    "models": [],
+    "tools": [],
+    "terminations": [],
+    "teams": [],
+    "workbenches": [
+      {
+        "provider": "autogen_ext.tools.mcp.McpWorkbench",
+        "component_type": "workbench",
+        "version": 1,
+        "component_version": 1,
+        "description": "Ejentum cognitive harness via MCP. The agent can call harness_reasoning, harness_code, harness_anti_deception, or harness_memory; each call retrieves a task-matched scaffold from a library of 679 cognitive operations engineered in natural language. Requires EJENTUM_API_KEY (free tier 100 calls, no card, at https://ejentum.com/pricing).",
+        "label": "Ejentum Reasoning Harness",
+        "config": {
+          "server_params": {
+            "type": "StdioServerParams",
+            "command": "npx",
+            "args": ["-y", "ejentum-mcp"],
+            "env": {
+              "EJENTUM_API_KEY": "REPLACE_WITH_YOUR_KEY"
+            },
+            "read_timeout_seconds": 10
+          },
+          "tool_overrides": {}
+        }
+      }
+    ]
+  }
+}
