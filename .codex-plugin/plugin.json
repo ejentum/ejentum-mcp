@@ -1,7 +1,7 @@
 {
   "name": "ejentum",
   "version": "0.1.0",
-  "description": "Reasoning Harness for agentic AI: library of 679 cognitive operations engineered in natural language across four harnesses (reasoning, code, anti-deception, memory). Each call retrieves a task-matched scaffold (failure pattern, executable procedure, suppression vectors, falsification test) the agent ingests before responding. Addresses attention decay, sycophantic collapse, hallucination drift, and reasoning decay in long agent loops.",
+  "description": "Reasoning Harness for agentic AI. Four MCP tools (reasoning, code, anti-deception, memory) over a library of 679 cognitive operations engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with gates, parallel branches, and meta-cognitive exits). Injected before an LLM's first token to harden reasoning against decay on complex tasks and long agent loops.",
   "author": {
     "name": "Ejentum",
     "email": "info@ejentum.com",
@@ -24,8 +24,8 @@
   "skills": "../skills",
   "interface": {
     "displayName": "Ejentum Reasoning Harness",
-    "shortDescription": "Cognitive scaffold tools (reasoning, code, anti-deception, memory) callable via MCP",
-    "longDescription": "Library of 679 cognitive operations engineered in natural language, organized across four harnesses. Each harness call retrieves a task-matched scaffold rather than serving a fixed template: a named failure pattern, an executable procedure, suppression vectors that block the obvious shortcut, and a falsification test for self-verification. The agent ingests the scaffold and writes from it. Free tier: 100 calls, no card.",
+    "shortDescription": "Reasoning Harness MCP tools: cognitive operations engineered as natural-language procedure plus executable reasoning topology DAG",
+    "longDescription": "Library of 679 cognitive operations across four harnesses (reasoning, code, anti-deception, memory), each operation engineered in two layers: a natural-language procedure (named failure pattern, steps, suppression vectors, falsification test) plus an executable reasoning topology (graph DAG with decision gates, parallel branches, and meta-cognitive exits where the model pauses to self-observe and re-enters). Reasoning spans six domains (abstraction, time, causality, simulation, spatial, metacognition); code covers the software-engineering layer; anti-deception spans six sub-layers (sycophancy, hallucination, deception, adversarial framing, judgment, executive control); memory covers the perception layer. The agent ingests both layers and writes from them. Hardens reasoning against decay on complex tasks and long agent loops. Free tier: 100 calls, no card.",
     "developerName": "Ejentum",
     "category": "agent-reliability",
     "websiteURL": "https://ejentum.com",

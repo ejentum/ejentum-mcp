@@ -1,6 +1,6 @@
 {
   "name": "ejentum",
-  "description": "Reasoning Harness for agentic AI: 4 cognitive operating modes (reasoning, code, anti-deception, memory) over 679 engineered cognitive operations served as MCP tools. Each call returns a structured scaffold the calling LLM ingests before its first token, catching sycophancy, hallucination, causal shortcuts, and reasoning decay in production agent loops.",
+  "description": "Reasoning Harness for agentic AI. Four MCP tools (reasoning, code, anti-deception, memory) over a library of 679 cognitive operations engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with gates, parallel branches, and meta-cognitive exits). Injected before an LLM's first token to harden reasoning against decay on complex tasks and long agent loops.",
   "version": "0.1.0",
   "author": {
     "name": "Ejentum",

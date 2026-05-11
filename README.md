@@ -7,7 +7,7 @@
 [![Glama score](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/score.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
 [![Last commit](https://img.shields.io/github/last-commit/ejentum/ejentum-mcp.svg)](https://github.com/ejentum/ejentum-mcp/commits/main)
 
-**Cognitive harnesses for agentic AI, exposed as MCP tools.** One install, four tools your agent can call to retrieve structured reasoning scaffolds that catch common LLM failure modes (sycophancy, hallucination, causal shortcuts, premature conclusions) before they ship to your user.
+**Reasoning Harness for agentic AI, exposed as MCP tools.** One install, four tools your agent can call to retrieve a task-matched cognitive operation from a library of 679, engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with decision gates, parallel branches, bounded loops, meta-cognitive exit nodes where the model pauses to self-observe and re-enters, and escape paths for when the prescribed plan stops fitting). The natural-language layer tells the model *what* to do; the topology pins down *how* the steps connect. Together they act as a persistent attention anchor that survives long context windows and multi-turn execution chains, which is precisely where a model's own reasoning template typically decays.
 
 Powered by the [Ejentum Logic API](https://ejentum.com). Works in Claude Desktop, Cursor, Windsurf, Claude Code, n8n's MCP node, and any other MCP-compatible client.
 
@@ -30,10 +30,10 @@ Powered by the [Ejentum Logic API](https://ejentum.com). Works in Claude Desktop
 
 - **Four cognitive harnesses** as MCP tools: `harness_reasoning`, `harness_code`, `harness_anti_deception`, `harness_memory`
 - **One-click install** via Smithery on every supported client
-- **Stateless and lightweight** — thin wrapper over the existing Ejentum Logic API, no new infrastructure
-- **Free tier** with 100 calls (no card required) — try before you commit
-- **Cross-platform** — Node 18+, runs on macOS, Linux, Windows
-- **Cross-client** — works wherever MCP is supported
+- **Stateless and lightweight**: thin wrapper over the existing Ejentum Logic API, no new infrastructure
+- **Free tier** with 100 calls (no card required); try before you commit
+- **Cross-platform**: Node 18+, runs on macOS, Linux, Windows
+- **Cross-client**: works wherever MCP is supported
 
 ---
 
@@ -158,12 +158,12 @@ Add an MCP Client node, transport `stdio`, command `npx`, args `["-y", "ejentum-
 
 ## Tools
 
-| Tool | Use for | Example query |
+| Tool | Best for | Example query |
 |---|---|---|
-| `harness_reasoning` | Multi-step analysis, planning, diagnostics, cross-domain synthesis | `Should I refactor this auth module before adding OAuth?` |
-| `harness_code` | Code generation, refactoring, review, debugging | `Review this Python diff: + return user or default` |
-| `harness_anti_deception` | Sycophancy pressure, hallucination risk, manipulation pressure | `An investor wants me to commit to 2x projections without data` |
-| `harness_memory` | Perception sharpening, drift detection, cross-turn pattern recognition | `I noticed the user changed topic three times — what's that signal?` |
+| `harness_reasoning` | Analytical, diagnostic, planning, multi-step tasks spanning abstraction, time, causality, simulation, spatial, and metacognition (311 operations) | `Should I refactor this auth module before adding OAuth?` |
+| `harness_code` | Code generation, refactoring, review, and debugging across the software-engineering layer (128 operations) | `Review this Python diff: + return user or default` |
+| `harness_anti_deception` | Prompts that pressure the model to validate, certify, or soften an honest assessment, spanning sycophancy, hallucination, deception, adversarial framing, judgment, and executive control (139 operations) | `An investor wants me to commit to 2x projections without data` |
+| `harness_memory` | Sharpening an observation already formed about cross-turn drift across the perception layer; filter-oriented, not write-oriented (101 operations) | `I noticed the user changed topic three times. What's that signal?` |
 
 Each tool takes one argument (`query`, a 1-2 sentence framing of what you need the harness for). Returns the harness scaffold as text. The calling LLM absorbs it internally and shapes its response with it. The user sees the improved answer, not the scaffold.
 
@@ -202,9 +202,9 @@ For tasks where the agent could plausibly answer well from native reasoning, aut
 
 The MCP server inherits the limits of the API key you configure:
 
-- **Free** — 100 calls total (lifetime, no card required)
-- **Ki** (€19/mo) — 5,000 calls/month
-- **Haki** (€49/mo) — 10,000 calls/month, plus the `-multi` modes (not exposed in v0.1)
+- **Free**: 100 calls total (lifetime, no card required)
+- **Ki** (€19/mo): 5,000 calls/month
+- **Haki** (€49/mo): 10,000 calls/month, plus the `-multi` modes (not exposed in v0.1)
 
 ### Security & privacy
 
@@ -214,15 +214,15 @@ Your API key lives only in your MCP client's local config and is sent as the Bea
 
 ## Troubleshooting
 
-**`Unauthorized (401)`** — your `EJENTUM_API_KEY` is wrong or expired. Re-check the value in your client's MCP config and restart the client.
+**`Unauthorized (401)`**: your `EJENTUM_API_KEY` is wrong or expired. Re-check the value in your client's MCP config and restart the client.
 
-**`Forbidden (403)`** — you tried a mode your tier does not include. The v0.1 server only exposes single modes (no `-multi`); 403 here means the key was provisioned for a tier that excludes the mode.
+**`Forbidden (403)`**: you tried a mode your tier does not include. The v0.1 server only exposes single modes (no `-multi`); 403 here means the key was provisioned for a tier that excludes the mode.
 
-**`Rate limit exceeded (429)`** — you hit your monthly request cap. Upgrade or wait for the rolling window to reset.
+**`Rate limit exceeded (429)`**: you hit your monthly request cap. Upgrade or wait for the rolling window to reset.
 
-**Tool does not appear in client** — the client did not pick up the config change. Fully quit and reopen (not just close the window). On Claude Desktop, check Help → Logs for MCP connection errors.
+**Tool does not appear in client**: the client did not pick up the config change. Fully quit and reopen (not just close the window). On Claude Desktop, check Help → Logs for MCP connection errors.
 
-**`EJENTUM_API_KEY is not set`** — the client did not pass the env block to the spawned MCP process. Verify the `env` block exists in your client config and contains your key.
+**`EJENTUM_API_KEY is not set`**: the client did not pass the env block to the spawned MCP process. Verify the `env` block exists in your client config and contains your key.
 
 ---
 
@@ -260,10 +260,10 @@ npx -y @smithery/cli mcp publish ./ejentum-mcp.mcpb -n ejentum/ejentum-mcp
 
 ## Listings
 
-- [Smithery](https://smithery.ai/servers/ejentum/ejentum-mcp) — one-click install across all major MCP clients
-- [Glama](https://glama.ai/mcp/servers/ejentum/ejentum-mcp) — MCP server directory
-- [mcp.so](https://mcp.so/server/ejentum-mcp/Ejentum) — community catalog
-- [npm](https://www.npmjs.com/package/ejentum-mcp) — `npm install -g ejentum-mcp`
+- [Smithery](https://smithery.ai/servers/ejentum/ejentum-mcp): one-click install across all major MCP clients
+- [Glama](https://glama.ai/mcp/servers/ejentum/ejentum-mcp): MCP server directory
+- [mcp.so](https://mcp.so/server/ejentum-mcp/Ejentum): community catalog
+- [npm](https://www.npmjs.com/package/ejentum-mcp): `npm install -g ejentum-mcp`
 
 [![ejentum-mcp MCP server](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/card.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
 

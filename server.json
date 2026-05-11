@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.ejentum/ejentum-mcp",
-  "description": "RAG augments knowledge. Ejentum augments reasoning. 4 harnesses, 679 abilities, runtime injection.",
+  "description": "Reasoning Harness for agentic AI. Four MCP tools (reasoning, code, anti-deception, memory) inject task-matched cognitive operations engineered as natural-language procedure plus executable reasoning topology.",
   "repository": {
     "url": "https://github.com/ejentum/ejentum-mcp",
     "source": "github"
   },
-  "version": "0.1.6",
+  "version": "0.1.7",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "ejentum-mcp",
-      "version": "0.1.6",
+      "version": "0.1.7",
       "transport": {
         "type": "stdio"
       },
