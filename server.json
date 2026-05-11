@@ -6,12 +6,12 @@
     "url": "https://github.com/ejentum/ejentum-mcp",
     "source": "github"
   },
-  "version": "0.1.7",
+  "version": "0.1.8",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "ejentum-mcp",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "transport": {
         "type": "stdio"
       },
