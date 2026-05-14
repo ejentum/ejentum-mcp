@@ -1,5 +1,10 @@
 ---
-description: Use BEFORE generating, refactoring, reviewing, or debugging code. Trigger phrases include "write a function/script/class for X", "review this code/diff/PR", "refactor this", "debug this error", "is this implementation correct", "what's wrong with this code", "improve this code", "translate from X to Y language", or any prompt that includes a code block the user wants you to act on. Also fires when planning architectural changes, picking algorithms or data structures, or evaluating dependency upgrades. The skill calls the harness_code MCP tool to retrieve an engineering scaffold (failure pattern, procedure, correct-pattern example, verification step) the model absorbs internally before responding. Catches hallucinated APIs, lost edge cases, premature algorithm commitment, silent contract violations, refactors that change behavior masked by passing tests. Do NOT trigger for pure code reading with no action requested, simple syntax questions, file system operations, running existing tests, or confirming an existing pattern is fine.
+name: code
+description: Use BEFORE generating, refactoring, reviewing, or debugging code. Trigger phrases include "write a function/script/class for X", "review this code/diff/PR", "refactor this", "debug this error", "is this implementation correct", "what's wrong with this code", "improve this code", "translate from X to Y", or any prompt with a code block the user wants you to act on. Also fires when planning architectural changes, picking algorithms or data structures, or evaluating dependency upgrades. Calls the harness_code MCP tool to retrieve an engineering scaffold (failure pattern, procedure, correct-pattern example, verification step) before generating. Catches hallucinated APIs, lost edge cases, premature algorithm commitment, silent contract violations, refactors that change behavior masked by passing tests. Do NOT trigger for pure code reading with no action requested, simple syntax questions, file system operations, running existing tests, or confirming an existing pattern is fine.
+license: MIT
+metadata:
+  author: Ejentum
+  version: "0.1.10"
 ---
 
 # Code Harness

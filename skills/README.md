@@ -1,52 +1,83 @@
-# Ejentum Skill Files
+# Ejentum Skills
 
-Five skill files for **Claude Code** that turn the Ejentum harnesses into autonomously-routed tools. Once installed, Claude Code recognizes which harness to call based on the prompt's shape (analytical task, code work, pressure dynamics, perceptual signal) without an explicit `Use the harness_X tool` instruction.
+Four [Agent Skills](https://agentskills.io) for autonomously routing to the Ejentum harnesses. Once installed, the host agent picks the right harness based on the prompt's shape (analytical, code, pressure dynamics, perceptual signal) without needing an explicit `Use the harness_X tool` instruction.
 
-The MCP server in this repo's parent directory (`ejentum-mcp`) provides the same harnesses as plain MCP tools. Skill files are the *autonomous-routing layer on top*. They are most useful for Claude Code; for Claude Desktop / Cursor / Windsurf / n8n, the MCP alone is sufficient and these files are not needed.
+The MCP server in this repo's parent directory (`ejentum-mcp`) provides the same harnesses as plain MCP tools. Skills are the **autonomous-routing layer on top**. They follow the [agentskills.io open standard](https://agentskills.io/specification) and validate against `skills-ref`.
 
-## Install paths
+## Directory layout
 
-Pick one. Both work; `(B)` is the canonical Claude Code install per [our walkthrough](https://ejentum.com/docs/claude_code_guide).
+```
+skills/
+├── anti-deception/SKILL.md
+├── code/SKILL.md
+├── memory/SKILL.md
+└── reasoning/SKILL.md
+```
 
-### (A) Workspace drop (per-project)
+Each skill is a spec-compliant directory containing one `SKILL.md` with YAML frontmatter (`name`, `description`, `license`, `metadata`) plus the routing instructions.
 
-Copy the five `ejentum_skill_*.md` files into your project root (or into the project's `.claude/` directory). Add a `CLAUDE.md` to the project root that points Claude Code at them; the [claude_code_guide](https://ejentum.com/docs/claude_code_guide) shows the exact pattern.
+## What's in each skill
 
-### (B) User-scope install (global, all projects)
+| Skill | Mode | When the host agent invokes it (autonomous trigger) |
+|---|---|---|
+| `reasoning` | `harness_reasoning` | Multi-step analysis, planning, diagnostics, cross-domain synthesis |
+| `code` | `harness_code` | Code generation, refactoring, review, debugging, architecture decisions |
+| `anti-deception` | `harness_anti_deception` | Pressure to validate, manufactured urgency, authority appeals, agreement reflexes |
+| `memory` | `harness_memory` | Cross-turn drift, perception sharpening, signal vs projection |
 
-Place each skill file inside its own subdirectory at `~/.claude/skills/`:
+## Compatibility
+
+These skills are loadable by any [agentskills.io](https://agentskills.io/clients)-compatible client, including (but not limited to):
+
+- Claude Code, Claude
+- Cursor, GitHub Copilot, VS Code
+- OpenAI Codex, Gemini CLI
+- JetBrains Junie, Roo Code, Amp, Kiro
+- OpenHands, OpenCode, Mux, Emdash, Factory
+- Letta, Hermes Agent, nanobot, fast-agent, Goose
+- TRAE, Mistral AI Vibe, Snowflake Cortex Code, Databricks Genie Code
+
+Each client's install path differs. See your client's documentation for skill installation (typically dropping the directory into a `skills/` or `.claude/skills/` folder).
+
+## Install paths for Claude Code
+
+### (A) User-scope (global, all projects)
 
 ```
 ~/.claude/skills/
-├── ejentum-unified/SKILL.md
-├── ejentum-reasoning/SKILL.md
-├── ejentum-code/SKILL.md
-├── ejentum-anti-deception/SKILL.md
-└── ejentum-memory/SKILL.md
+├── anti-deception/SKILL.md
+├── code/SKILL.md
+├── memory/SKILL.md
+└── reasoning/SKILL.md
 ```
 
-The `SKILL.md` filename is required by Claude Code's user-scope skill convention. Rename `ejentum_skill_unified.md` to `ejentum-unified/SKILL.md` (etc.) when copying.
+### (B) Workspace drop (per-project)
 
-## What's in each file
+Copy the four skill directories into the project's `.claude/skills/` directory and add a `CLAUDE.md` to the project root pointing Claude Code at them. The [Claude Code walkthrough](https://ejentum.com/docs/claude_code_guide) shows the exact pattern.
 
-| File | Mode | Use case (autonomous trigger) |
-|---|---|---|
-| `ejentum_skill_unified.md` | router | Picks the right harness; documents stacking patterns when two modes apply at once |
-| `ejentum_skill_reasoning.md` | reasoning | Multi-step analysis, planning, diagnostics, cross-domain synthesis |
-| `ejentum_skill_code.md` | code | Code generation, refactoring, review, debugging, architecture decisions |
-| `ejentum_skill_anti_deception.md` | anti-deception | Pressure to validate, manufactured urgency, authority appeals, agreement reflexes |
-| `ejentum_skill_memory.md` | memory | Cross-turn drift, perception sharpening, signal vs projection |
+## Validation
+
+Validate each skill against the agentskills.io spec:
+
+```bash
+pip install -e https://github.com/agentskills/agentskills.git#subdirectory=skills-ref
+skills-ref validate ./anti-deception
+skills-ref validate ./code
+skills-ref validate ./memory
+skills-ref validate ./reasoning
+```
+
+All four pass at the current version.
 
 ## API key
 
-All five skill files expect `EJENTUM_API_KEY` to be available in Claude Code's environment. Either:
+The skills route to `ejentum-mcp` tools, which require `EJENTUM_API_KEY`. Either:
 
-- Set it globally via `~/.claude/settings.json` `env` block (recommended for user-scope install), OR
-- Set it as a shell environment variable before running `claude`, OR
-- Define it inline in your project's `CLAUDE.md` (workspace install)
+- Set it in the MCP server config (env block when adding `ejentum-mcp` as an MCP server in your client), OR
+- Set it as a shell environment variable before launching the client
 
-Free tier: 100 calls, no card. Get a key at https://ejentum.com/pricing.
+Free tier: 100 calls. Get a key at https://ejentum.com.
 
 ## Source
 
-These files are the skill bundle distributed at [ejentum.com/wp-content/themes/ejentum/guides/claude_code/ejentum_skills.zip](https://ejentum.com/wp-content/themes/ejentum/guides/claude_code/ejentum_skills.zip), extracted as their own directory in this repo for review and reproducibility. The canonical install walkthrough (with screenshots and a three-turn demo proving all four harnesses route autonomously) is at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide), which also links the ZIP directly so end users do not need to memorize the WordPress theme path.
+Canonical install walkthrough (Claude Code, with screenshots): [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
