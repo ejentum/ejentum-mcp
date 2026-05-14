@@ -1,6 +1,6 @@
 {
   "name": "ejentum-mcp",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "mcpName": "io.github.ejentum/ejentum-mcp",
   "description": "MCP server exposing four cognitive harness tools (harness_reasoning, harness_code, harness_anti_deception, harness_memory) that AI agents call before generating. Each tool returns a structured prompt: a named failure pattern, an executable procedure, suppression vectors, and a falsification test for self-verification.",
   "type": "module",
