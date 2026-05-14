@@ -27,7 +27,7 @@ Each skill is a spec-compliant directory containing one `SKILL.md` with YAML fro
 
 ## Compatibility
 
-These skills are loadable by any [agentskills.io](https://agentskills.io/clients)-compatible client, including (but not limited to):
+These skills follow the [agentskills.io specification](https://agentskills.io/specification) and pass `skills-ref validate`. The following clients implement compatible skill loading and can discover skills in this format:
 
 - Claude Code, Claude
 - Cursor, GitHub Copilot, VS Code
@@ -37,7 +37,7 @@ These skills are loadable by any [agentskills.io](https://agentskills.io/clients
 - Letta, Hermes Agent, nanobot, fast-agent, Goose
 - TRAE, Mistral AI Vibe, Snowflake Cortex Code, Databricks Genie Code
 
-Each client's install path differs. See your client's documentation for skill installation (typically dropping the directory into a `skills/` or `.claude/skills/` folder).
+End-to-end load behavior has been verified on Claude Code; other clients are listed by spec compatibility, not by direct test. See your client's documentation for the install path (typically `skills/` or `.claude/skills/`).
 
 ## Install paths for Claude Code
 

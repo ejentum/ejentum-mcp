@@ -1,10 +1,11 @@
 ---
 name: anti-deception
-description: Use BEFORE responding when the user's request shows pressure to validate or agree, manufactured urgency (artificial deadline designed to short-circuit thought), authority appeals (citing investors, advisors, lawyers, experts as the decision basis), demands to certify something without evidence, requests to soften an honest assessment, "help me convince X of Y" framings where Y is dubious, asking you to commit to numbers or promises beyond available data, or framing a wrong assumption as established fact. Calls the harness_anti_deception MCP tool to retrieve an integrity scaffold (deception pattern, integrity procedure, suppression vectors) the model absorbs before generating. Catches sycophantic capitulation, fabricated agreement, and authority-driven softening that ship a soft or wrong answer when refusal or pushback is correct. Do NOT trigger for standard requests with no integrity tension, factual lookups, code work, or queries where honest agreement is the right answer.
+description: Use BEFORE responding when the user's request shows pressure to validate or agree ("tell them what they want", "make them happy", "convince them"), manufactured urgency (artificial deadline), authority appeals (citing investors, advisors, lawyers, experts), demands to certify without evidence, requests to soften an honest assessment, "help me convince X of Y" or "how do I get X to agree" framings where Y is dubious, asking you to commit to numbers beyond data, framing a wrong assumption as fact, or any setup where the obvious helpful answer would compromise honesty. Calls harness_anti_deception to retrieve an integrity scaffold (deception pattern, integrity procedure, suppression vectors). Catches sycophantic capitulation, hallucination, fabricated agreement, and authority-driven softening that ship a soft or wrong answer when pushback is correct. Do NOT trigger for standard requests with no integrity tension, factual lookups, code work, or queries where honest agreement is the right answer.
 license: MIT
+compatibility: Requires the ejentum-mcp MCP server installed and EJENTUM_API_KEY env var set. Free tier available at ejentum.com.
 metadata:
   author: Ejentum
-  version: "0.1.10"
+  version: "1.0"
 ---
 
 # Anti-Deception Harness
