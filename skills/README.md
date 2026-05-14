@@ -71,10 +71,10 @@ All four pass at the current version.
 
 ## API key
 
-The skills route to `ejentum-mcp` tools, which require `EJENTUM_API_KEY`. Either:
+The skills route to the four `harness_*` tools, available via two install paths (same `EJENTUM_API_KEY` for both):
 
-- Set it in the MCP server config (env block when adding `ejentum-mcp` as an MCP server in your client), OR
-- Set it as a shell environment variable before launching the client
+- **Stdio (npm package)**: `npx -y ejentum-mcp` configured as an MCP server in your client, with `EJENTUM_API_KEY` in the env block.
+- **Hosted HTTPS**: point your client at `https://api.ejentum.com/mcp` with `Authorization: Bearer YOUR_EJENTUM_API_KEY`. No install, no subprocess.
 
 Free tier: 100 calls. Get a key at https://ejentum.com.
 

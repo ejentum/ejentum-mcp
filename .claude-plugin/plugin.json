@@ -1,7 +1,7 @@
 {
   "name": "ejentum",
-  "description": "Reasoning Harness for agentic AI. Four MCP tools (reasoning, code, anti-deception, memory) over a library of 679 cognitive operations engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with gates, parallel branches, and meta-cognitive exits). Injected before an LLM's first token to harden reasoning against decay on complex tasks and long agent loops.",
-  "version": "0.1.0",
+  "description": "Reasoning Harness for agentic AI. Four MCP tools (reasoning, code, anti-deception, memory) over a library of 679 cognitive operations engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with gates, parallel branches, and meta-cognitive exits). Injected before an LLM's first token to harden reasoning against decay on complex tasks and long agent loops. Two install paths: stdio via `npx -y ejentum-mcp` or hosted HTTPS at https://api.ejentum.com/mcp.",
+  "version": "0.1.11",
   "author": {
     "name": "Ejentum",
     "email": "info@ejentum.com",

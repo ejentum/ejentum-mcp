@@ -11,6 +11,13 @@
 
 Powered by the [Ejentum Logic API](https://ejentum.com). Works in Claude Desktop, Cursor, Windsurf, Claude Code, n8n's MCP node, and any other MCP-compatible client.
 
+> **Two install paths for the four cognitive harnesses:**
+>
+> 1. **Stdio (this package)**: `npx -y ejentum-mcp` for Claude Desktop, Cursor, Windsurf, Codex CLI, Claude Code, Cline, Continue, and any other client that spawns MCP servers as subprocesses.
+> 2. **Hosted HTTPS** at `https://api.ejentum.com/mcp` for n8n MCP Client and any HTTP-MCP client. Point at the URL with `Authorization: Bearer YOUR_EJENTUM_API_KEY`. No install, no subprocess.
+>
+> Both paths use the same `EJENTUM_API_KEY` and the same four `harness_*` tools. Pick whichever fits your client.
+
 > **For Claude Code users specifically:** this repo doubles as a [Claude Code plugin](https://code.claude.com/docs/en/plugins). It ships with `.claude-plugin/plugin.json`, four auto-routed skills under `skills/<mode>/SKILL.md`, and an `.mcp.json` that pre-configures the `ejentum-mcp` MCP server install. Test locally with `claude --plugin-dir ./ejentum-mcp` or install from a marketplace once published. The legacy [`skills/ejentum_skill_*.md`](./skills/) files (workspace-drop format) remain available alongside, distributed via the website ZIP. Walkthrough at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
 
 > **For OpenAI Codex CLI users:** this repo also ships [`.codex-plugin/plugin.json`](./.codex-plugin/plugin.json) so it's plugin-ready for the upcoming Codex Plugin Directory. Today, install via `~/.codex/config.toml`:

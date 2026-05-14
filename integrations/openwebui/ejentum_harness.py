@@ -5,7 +5,7 @@ author_url: https://ejentum.com
 funding_url: https://ejentum.com/pricing
 version: 0.1.0
 license: MIT
-description: Four cognitive harness tools (reasoning, code, anti-deception, memory) the agent can call on demand. Each call retrieves a task-matched cognitive operation from Ejentum's library of 679, engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with gates, parallel branches, and meta-cognitive exits). The agent ingests both layers before writing.
+description: Four cognitive harness tools (reasoning, code, anti-deception, memory) the agent can call on demand. Each call retrieves a task-matched cognitive operation from Ejentum's library of 679, engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with gates, parallel branches, and meta-cognitive exits). The agent ingests both layers before writing. This file is the Open WebUI Tools function shape that calls the Ejentum Logic API directly. The same four harnesses are also available via MCP: stdio via `npx -y ejentum-mcp`, or hosted HTTPS at https://api.ejentum.com/mcp for HTTP-MCP clients.
 requirements: aiohttp
 """
 
