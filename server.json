@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.ejentum/ejentum-mcp",
-  "description": "Reasoning Harness for agentic AI: 4 tools inject NL procedures + executable reasoning topology DAGs.",
+  "description": "MCP server with reasoning, code, anti-deception, and memory harness tools for AI agents.",
   "repository": {
     "url": "https://github.com/ejentum/ejentum-mcp",
     "source": "github"
   },
-  "version": "0.1.8",
+  "version": "0.1.9",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "ejentum-mcp",
-      "version": "0.1.8",
+      "version": "0.1.9",
       "transport": {
         "type": "stdio"
       },
