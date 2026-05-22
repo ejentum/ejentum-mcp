@@ -5,6 +5,7 @@
 [![Node](https://img.shields.io/node/v/ejentum-mcp.svg)](https://nodejs.org)
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.ejentum%2Fejentum--mcp-blue)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.ejentum/ejentum-mcp)
 [![Glama score](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/score.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
+[![skills.sh](https://skills.sh/b/ejentum/ejentum-mcp)](https://skills.sh/ejentum/ejentum-mcp)
 [![Last commit](https://img.shields.io/github/last-commit/ejentum/ejentum-mcp.svg)](https://github.com/ejentum/ejentum-mcp/commits/main)
 
 **Reasoning Harness for agentic AI, exposed as MCP tools.** One install, four tools your agent can call to retrieve a task-matched cognitive operation from a library of 679, engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with decision gates, parallel branches, bounded loops, meta-cognitive exit nodes where the model pauses to self-observe and re-enters, and escape paths for when the prescribed plan stops fitting). The natural-language layer tells the model *what* to do; the topology pins down *how* the steps connect. Together they act as a persistent attention anchor that survives long context windows and multi-turn execution chains, which is precisely where a model's own reasoning template typically decays.
@@ -17,6 +18,14 @@ Powered by the [Ejentum Logic API](https://ejentum.com). Works in Claude Desktop
 > 2. **Hosted HTTPS** at `https://api.ejentum.com/mcp` for n8n MCP Client and any HTTP-MCP client. Point at the URL with `Authorization: Bearer YOUR_EJENTUM_API_KEY`. No install, no subprocess.
 >
 > Both paths use the same `EJENTUM_API_KEY` and the same four `harness_*` tools. Pick whichever fits your client.
+
+> **Install the skill files (cross-agent CLI):**
+>
+> ```bash
+> npx skills add ejentum/ejentum-mcp
+> ```
+>
+> Installs all four `SKILL.md` files (`reasoning`, `code`, `anti-deception`, `memory`) into your agent's skills directory. Works across [Claude Code, Cursor, Codex, Windsurf, OpenCode, and 50+ more](https://github.com/vercel-labs/skills) via the [Vercel skills CLI](https://skills.sh). After install, the skills auto-route based on their trigger descriptions and call the `harness_*` tools on the MCP server you've configured (stdio or hosted, see above).
 
 > **For Claude Code users specifically:** this repo doubles as a [Claude Code plugin](https://code.claude.com/docs/en/plugins). It ships with `.claude-plugin/plugin.json`, four auto-routed skills under `skills/<mode>/SKILL.md`, and an `.mcp.json` that pre-configures the `ejentum-mcp` MCP server install. Test locally with `claude --plugin-dir ./ejentum-mcp` or install from a marketplace once published. The legacy [`skills/ejentum_skill_*.md`](./skills/) files (workspace-drop format) remain available alongside, distributed via the website ZIP. Walkthrough at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
 
