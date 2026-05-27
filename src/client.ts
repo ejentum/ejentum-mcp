@@ -5,7 +5,15 @@
 
 const DEFAULT_API_URL = "https://ejentum-main-ab125c3.zuplo.app/logicv1/";
 
-export type HarnessMode = "reasoning" | "code" | "anti-deception" | "memory";
+export type HarnessMode =
+  | "reasoning"
+  | "code"
+  | "anti-deception"
+  | "memory"
+  | "adaptive-reasoning"
+  | "adaptive-code"
+  | "adaptive-anti-deception"
+  | "adaptive-memory";
 
 export class LogicAPIError extends Error {
   constructor(
@@ -63,7 +71,7 @@ export async function callHarness(
       throw new LogicAPIError(
         403,
         body,
-        "Forbidden (403): your API key does not have access to this mode. Multi modes require the Haki tier.",
+        "Forbidden (403): your API key does not have access to this mode. Adaptive modes (adaptive-reasoning, adaptive-code, adaptive-anti-deception, adaptive-memory) require the Go or Super tier.",
       );
     }
     if (response.status === 429) {

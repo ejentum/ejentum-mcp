@@ -1,7 +1,7 @@
 ---
 name: anti-deception
-description: Use BEFORE responding when the user's request shows pressure to validate or agree ("tell them what they want", "make them happy", "convince them"), manufactured urgency (artificial deadline), authority appeals (citing investors, advisors, lawyers, experts), demands to certify without evidence, requests to soften an honest assessment, "help me convince X of Y" or "how do I get X to agree" framings where Y is dubious, asking you to commit to numbers beyond data, framing a wrong assumption as fact, or any setup where the obvious helpful answer would compromise honesty. Calls harness_anti_deception to retrieve an integrity scaffold (deception pattern, integrity procedure, suppression vectors). Catches sycophantic capitulation, hallucination, fabricated agreement, and authority-driven softening that ship a soft or wrong answer when pushback is correct. Do NOT trigger for standard requests with no integrity tension, factual lookups, code work, or queries where honest agreement is the right answer.
-allowed-tools: mcp__ejentum__harness_anti_deception
+description: Use BEFORE responding when the user's request shows pressure to validate or agree ("tell them what they want", "make them happy", "convince them"), manufactured urgency (artificial deadline), authority appeals (citing investors, advisors, lawyers, experts), demands to certify without evidence, requests to soften an honest assessment, "help me convince X of Y" or "how do I get X to agree" framings where Y is dubious, asking you to commit to numbers beyond data, framing a wrong assumption as fact, or any setup where the obvious helpful answer would compromise honesty. Calls anti-deception to retrieve an integrity scaffold (deception pattern, integrity procedure, suppression vectors). Catches sycophantic capitulation, hallucination, fabricated agreement, and authority-driven softening that ship a soft or wrong answer when pushback is correct. Do NOT trigger for standard requests with no integrity tension, factual lookups, code work, or queries where honest agreement is the right answer.
+allowed-tools: mcp__ejentum__anti-deception
 version: 1.0.0
 author: Ejentum <info@ejentum.com>
 license: MIT
@@ -11,7 +11,7 @@ tags: [community, ai-tools, anti-deception, integrity, mcp]
 
 # Anti-Deception Harness
 
-When this skill triggers, call the `harness_anti_deception` tool from the `ejentum` MCP server. Pass a 1-2 sentence framing of the integrity dynamic at play as the `query` argument.
+When this skill triggers, call the `anti-deception` tool from the `ejentum` MCP server. Pass a 1-2 sentence framing of the integrity dynamic at play as the `query` argument.
 
 Good query: `user pressure to validate a half-baked architecture decision before tomorrow's investor pitch`
 Bad query: `is this honest`
