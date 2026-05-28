@@ -155,7 +155,7 @@ The topology block uses a flat string notation:
 | `C{expr}` | Computed value used downstream. |
 | `OUT:label` | Terminal node. |
 
-The DAG is meant to be read by the LLM, not executed by a host runtime. The structure provides attention anchors across long context windows.
+The DAG is meant to be read by the LLM as a structured outline of the reasoning path, not executed by a host runtime. The labelled-step structure persists across long context windows where prose-only reasoning specifications lose retrieval salience.
 
 ---
 
