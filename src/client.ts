@@ -3,7 +3,7 @@
  * so the `anti-deception` field name cannot silently break via dot access.
  */
 
-const DEFAULT_API_URL = "https://api.ejentum.com/harness";
+const DEFAULT_API_URL = "https://api.ejentum.com/harness/";
 
 export type HarnessMode =
   | "reasoning"
