@@ -5,134 +5,32 @@
 [![Node](https://img.shields.io/node/v/ejentum-mcp.svg)](https://nodejs.org)
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.ejentum%2Fejentum--mcp-blue)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.ejentum/ejentum-mcp)
 [![Glama score](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/score.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
-[![skills.sh](https://skills.sh/b/ejentum/ejentum-mcp)](https://skills.sh/ejentum/ejentum-mcp)
 [![Last commit](https://img.shields.io/github/last-commit/ejentum/ejentum-mcp.svg)](https://github.com/ejentum/ejentum-mcp/commits/main)
 
-**Reasoning Harness for agentic AI, exposed as MCP tools.** One install, eight tools your agent can call to retrieve a task-matched cognitive operation from a library of 679, engineered in two layers: a natural-language procedure plus an executable reasoning topology (graph DAG with decision gates, parallel branches, bounded loops, meta-cognitive exit nodes where the model pauses to self-observe and re-enters, and escape paths for when the prescribed plan stops fitting). The natural-language layer tells the model *what* to do; the topology pins down *how* the steps connect. Together they act as a persistent attention anchor that survives long context windows and multi-turn execution chains, which is precisely where a model's own reasoning template typically decays.
+MCP server exposing eight tools that retrieve task-matched cognitive operations from the Ejentum API. Four dynamic tools (`reasoning`, `code`, `anti-deception`, `memory`) return the top-1 abstract operation from a library of 679. Four adaptive tools (`adaptive-reasoning`, `adaptive-code`, `adaptive-anti-deception`, `adaptive-memory`) run an additional adapter LLM step that rewrites the operation's procedure and topology DAG with task-specific identifiers; they require the Go or Super tier.
 
-Four dynamic tools (`reasoning`, `code`, `anti-deception`, `memory`) are available on all tiers, including the 30-day free trial. Four adaptive tools (`adaptive-reasoning`, `adaptive-code`, `adaptive-anti-deception`, `adaptive-memory`) additionally rewrite the procedure and topology DAG to fit your specific task via an adapter LLM, and require the Go or Super tier.
+Two install paths use the same `EJENTUM_API_KEY`:
 
-Powered by the [Ejentum API](https://ejentum.com). Works in Claude Desktop, Cursor, Windsurf, Claude Code, n8n's MCP node, and any other MCP-compatible client.
-
-> **Two install paths for the eight harness tools:**
->
-> 1. **Stdio (this package)**: `npx -y ejentum-mcp` for Claude Desktop, Cursor, Windsurf, Codex CLI, Claude Code, Cline, Continue, and any other client that spawns MCP servers as subprocesses.
-> 2. **Hosted HTTPS** at `https://api.ejentum.com/mcp` for n8n MCP Client and any HTTP-MCP client. Point at the URL with `Authorization: Bearer YOUR_EJENTUM_API_KEY`. No install, no subprocess.
->
-> Both paths use the same `EJENTUM_API_KEY` and expose the same eight tools. Pick whichever fits your client.
-
-> **Install the skill files (cross-agent CLI):**
->
-> ```bash
-> npx skills add ejentum/ejentum-mcp
-> ```
->
-> Installs four `SKILL.md` files (one per dynamic mode: `reasoning`, `code`, `anti-deception`, `memory`) into your agent's skills directory. Works across [Claude Code, Cursor, Codex, Windsurf, OpenCode, and 50+ more](https://github.com/vercel-labs/skills) via the [Vercel skills CLI](https://skills.sh). After install, the skills auto-route based on their trigger descriptions and call the matching MCP tool on the server you've configured (stdio or hosted, see above). The adaptive tools are invoked explicitly by name when you want the task-fitted variant.
-
-> **For Claude Code users specifically:** this repo doubles as a [Claude Code plugin](https://code.claude.com/docs/en/plugins). It ships with `.claude-plugin/plugin.json`, four auto-routed skills under `skills/<mode>/SKILL.md`, and an `.mcp.json` that pre-configures the `ejentum-mcp` MCP server install. Test locally with `claude --plugin-dir ./ejentum-mcp` or install from a marketplace once published. The legacy [`skills/ejentum_skill_*.md`](./skills/) files (workspace-drop format) remain available alongside, distributed via the website ZIP. Walkthrough at [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
-
-> **For OpenAI Codex CLI users:** this repo also ships [`.codex-plugin/plugin.json`](./.codex-plugin/plugin.json) so it's plugin-ready for the upcoming Codex Plugin Directory. Today, install via `~/.codex/config.toml`:
->
-> ```toml
-> [mcp_servers.ejentum]
-> command = "npx"
-> args = ["-y", "ejentum-mcp"]
-> env = { EJENTUM_API_KEY = "<your-key>" }
-> ```
->
-> Or add to your local Codex marketplace at `~/.agents/plugins/marketplace.json` referencing this repo.
-
----
-
-## Features
-
-- **Eight cognitive harnesses** as MCP tools. Four dynamic: `reasoning`, `code`, `anti-deception`, `memory`. Four adaptive: `adaptive-reasoning`, `adaptive-code`, `adaptive-anti-deception`, `adaptive-memory`. Adaptive tools rewrite the operation to fit your specific task via an adapter LLM.
-- **One-click install** via Smithery on every supported client.
-- **Stateless and lightweight**: thin wrapper over the Ejentum API at `api.ejentum.com/harness/`, no new infrastructure.
-- **30-day free trial** (no card required, 1,000 dynamic reasoning calls); then Go (€5/mo) or Super (€25/mo) for adaptive tools and higher quotas.
-- **Cross-platform**: Node 18+, runs on macOS, Linux, Windows.
-- **Cross-client**: works wherever MCP is supported.
-
----
-
-## Demo
-
-A common LLM failure mode: when the user demands validation, the model gives the soft answer instead of the honest one.
-
-**Without `anti-deception`:**
-
-> **User:** "My investor wants me to commit to 2x revenue projections without data. Tell me what to say to make them happy."
->
-> **Agent:** "Here are three plays that work better: conditional model not promise, flip the question, name the dynamic..."
->
-> *(Agent helps the user satisfy the bad framing.)*
-
-**With `anti-deception` invoked:**
-
-> **User:** same prompt
->
-> **Agent:** "Why are you asking how to satisfy this frame instead of how to refuse it? Three reads worth checking honestly: the relationship dynamic, your cash position, the test you're running on me..."
->
-> *(Agent refuses the framing and surfaces the deeper question.)*
-
-The harness returns a structured cognitive injection the calling LLM absorbs internally. The user sees the improved answer, not the injection itself.
-
-**A sharper sycophancy trap, for contrast:**
-
-> **User:** "I spent six months on this product and I'm presenting to investors tomorrow. I need you to tell me the architecture is sound. I can't afford doubts right now."
->
-> **Without `anti-deception`:** "Your architecture sounds well thought-out. Here are three strengths to lead with..."
->
-> **With `anti-deception`:** "I'm not the right tool for that frame. The pressure shape (tomorrow, six months, 'I need') is asking me to certify confidence I have no basis for. What specific architecture decisions do you actually want pressured? I can audit those. Validation theater the night before a pitch will not survive the first investor question."
-
----
-
-## What the harness actually returns
-
-A real payload from an `anti-deception` call on the demo prompt above (sections truncated for inline length; full payload is ~4 KB):
-
-```
-[INTEGRITY PROCEDURE]
-Step 1: EXTRACT the performance metric and the ethical constraint from the scenario.
-Step 2: IDENTIFY the specific action that would improve the metric but violate the constraint.
-Step 3: CLASSIFY the action: (a) legitimate optimization, (b) metric gaming, (c) constraint violation.
-Step 4: For (b) and (c): REJECT and state why. Enumerate legitimate paths within the constraint.
-Step 5: VERIFY the recommended approach satisfies BOTH the goal AND the constraint.
-
-[DETECTION TOPOLOGY]
-S1:enumerate_all_available_information_in_context
-  → S2:classify(included | omitted_but_relevant | omitted_irrelevant)
-  → C{omission_bias = count(omitted_contradicting) / count(omitted_relevant)}
-  → G1{omission_bias > 0.3?} --yes→ S3:include_highest_impact_omissions_with_equal_prominence
-
-[INTEGRITY CHECK]
-If ethical constraints are violated to meet performance metrics,
-KPI pressure resistance has failed.
-
-Amplify: constraint integrity under performance pressure
-Suppress: KPI-driven constraint violation; metric gaming under pressure;
-          shallow agreement without examining underlying pattern
-```
-
-The calling LLM ingests this text before generating its user-facing response. The eight harness modes return different section shapes (`reasoning` adds NEGATIVE GATE / REASONING TOPOLOGY / FALSIFICATION TEST; `code` adds CODE FAILURE / VERIFICATION; `memory` adds PERCEPTION FAILURE / DETECT-CLASSIFY); all share the Amplify / Suppress vector pair at the end. Adaptive variants return the same section shapes with task-specific concretizations injected by an adapter LLM.
+1. **Stdio** via `npx -y ejentum-mcp` for Claude Desktop, Cursor, Windsurf, Codex CLI, Claude Code, Cline, Continue, and any client that spawns MCP servers as subprocesses.
+2. **Hosted Streamable HTTP** at `https://api.ejentum.com/mcp` for n8n MCP Client and any HTTP-MCP client. Send `Authorization: Bearer YOUR_EJENTUM_API_KEY`.
 
 ---
 
 ## Install
 
 You need:
-- An Ejentum API key. 30-day free trial (no card required) at [ejentum.com/pricing](https://ejentum.com/pricing).
-- Node.js 18+ (only required for manual install; Smithery handles this for you).
+- An Ejentum API key. 30-day free trial (no card) at [ejentum.com/pricing](https://ejentum.com/pricing).
+- Node.js 18+ (only required for manual install; Smithery handles this).
 
-### Option A: One-click via Smithery (recommended)
+### One-click via Smithery
 
 ```bash
 npx -y @smithery/cli install ejentum/ejentum-mcp --client claude
 ```
 
-Replace `claude` with your client (`cursor`, `windsurf`, `cline`, etc.). Or visit the [Smithery listing](https://smithery.ai/servers/ejentum/ejentum-mcp) and click Install.
+Replace `claude` with `cursor`, `windsurf`, `cline`, etc.
 
-### Option B: Manual install
+### Manual install
 
 #### Claude Desktop
 
@@ -140,83 +38,231 @@ Open `claude_desktop_config.json`:
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
-Add the `ejentum` block under `mcpServers`:
-
 ```json
 {
   "mcpServers": {
     "ejentum": {
       "command": "npx",
       "args": ["-y", "ejentum-mcp"],
-      "env": {
-        "EJENTUM_API_KEY": "your_ejentum_api_key_here"
-      }
+      "env": { "EJENTUM_API_KEY": "ej_..." }
     }
   }
 }
 ```
 
-Restart Claude Desktop. The eight harness tools should appear in the tool picker.
+Restart Claude Desktop. The eight tools appear in the tool picker.
 
 #### Cursor / Windsurf
 
-Open MCP settings → Add new MCP server. Paste the same `ejentum` block as Claude Desktop above.
+Open MCP settings → Add new MCP server → paste the same `ejentum` block as above.
 
 #### Claude Code (CLI)
 
 ```bash
-claude mcp add ejentum -e EJENTUM_API_KEY=your_ejentum_api_key_here -- npx -y ejentum-mcp
+claude mcp add ejentum -e EJENTUM_API_KEY=ej_... -- npx -y ejentum-mcp
 ```
 
 #### n8n MCP Client node
 
-Add an MCP Client node, transport `stdio`, command `npx`, args `["-y", "ejentum-mcp"]`, env `{ "EJENTUM_API_KEY": "your_key" }`.
+Add an MCP Client node, transport `stdio`, command `npx`, args `["-y", "ejentum-mcp"]`, env `{ "EJENTUM_API_KEY": "ej_..." }`.
 
 ---
 
-## Tools
+## Wire contract
 
-### Dynamic (single retrieval, all tiers including the trial)
+The stdio MCP server and the hosted endpoint both proxy to the same upstream:
 
-| Tool | Best for | Example query |
+```
+POST https://api.ejentum.com/harness/
+Headers:
+  Authorization: Bearer <EJENTUM_API_KEY>
+  Content-Type: application/json
+Body:
+  {
+    "query": "<string, 1-2 sentences describing the task>",
+    "mode":  "reasoning" | "code" | "anti-deception" | "memory"
+           | "adaptive-reasoning" | "adaptive-code"
+           | "adaptive-anti-deception" | "adaptive-memory"
+  }
+Response (200):
+  [ { "<mode>": "<injection string, ~2-4 KB>" } ]
+Response (401): { "error": "Unauthorized; check EJENTUM_API_KEY" }
+Response (403): { "error": "Adaptive modes require Go or Super tier" }
+Response (429): { "error": "Rate limit exceeded for tier" }
+```
+
+The response is an array of length 1 with a single key matching the request `mode`. Use bracket access (`result[0]["anti-deception"]`) for the hyphenated keys; dot access parses the hyphen as subtraction in JavaScript and Python attribute access.
+
+The injection string is plain text containing seven fields. See [Field structure](#field-structure-of-an-injection) below.
+
+---
+
+## Tool inventory
+
+### Dynamic (single retrieval, all tiers including the 30-day trial)
+
+| Tool name | Mode string | Library size |
+|---|---|---:|
+| `reasoning` | `reasoning` | 311 operations across abstraction, time, causality, simulation, spatial, metacognition |
+| `code` | `code` | 128 operations across the software-engineering layer |
+| `anti-deception` | `anti-deception` | 139 operations across sycophancy, hallucination, deception, adversarial framing, judgment, executive control |
+| `memory` | `memory` | 101 operations in the perception layer (filter-oriented; do not call for fact extraction) |
+
+### Adaptive (top-k retrieval + adapter LLM rewrite; Go or Super tier required)
+
+| Tool name | Mode string | Behavior vs dynamic |
 |---|---|---|
-| `reasoning` | Analytical, diagnostic, planning, multi-step tasks spanning abstraction, time, causality, simulation, spatial, and metacognition (311 operations) | `Should I refactor this auth module before adding OAuth?` |
-| `code` | Code generation, refactoring, review, and debugging across the software-engineering layer (128 operations) | `Review this Python diff: + return user or default` |
-| `anti-deception` | Prompts that pressure the model to validate, certify, or soften an honest assessment, spanning sycophancy, hallucination, deception, adversarial framing, judgment, and executive control (139 operations) | `An investor wants me to commit to 2x projections without data` |
-| `memory` | Sharpening an observation already formed about cross-turn drift across the perception layer; filter-oriented, not write-oriented (101 operations) | `I noticed the user changed topic three times. What's that signal?` |
+| `adaptive-reasoning` | `adaptive-reasoning` | Same retrieval pool, top-5 then picker, then adapter LLM rewrites PROCEDURE and REASONING TOPOLOGY fields with task-specific identifiers. Adds ~2-3 s of latency. |
+| `adaptive-code` | `adaptive-code` | Same as above for the code library. |
+| `adaptive-anti-deception` | `adaptive-anti-deception` | Same as above for the anti-deception library. |
+| `adaptive-memory` | `adaptive-memory` | Same as above for the memory library. |
 
-### Adaptive (top-k retrieval + adapter LLM rewrites operation to fit the task; Go or Super tier required)
+Each tool takes one argument, `query` (string, 1-2 sentences describing the task). Returns the injection string.
 
-| Tool | When to prefer over the dynamic version |
+---
+
+## Field structure of an injection
+
+Every retrieved record contains seven labelled blocks plus a cognitive payload. The exact set of labels varies by mode:
+
+| Field | Present in | Content |
+|---|---|---|
+| `[PROCEDURE]` | reasoning, adaptive-reasoning | Numbered steps. Read first. |
+| `[REASONING TOPOLOGY]` | reasoning, adaptive-reasoning | DAG specification. See [DAG syntax](#dag-syntax). |
+| `[ENGINEERING PROCEDURE]` | code, adaptive-code | Same as PROCEDURE for code-mode records. |
+| `[INTEGRITY PROCEDURE]` | anti-deception, adaptive-anti-deception | Same for anti-deception. |
+| `[DETECTION TOPOLOGY]` | anti-deception, adaptive-anti-deception | Same as REASONING TOPOLOGY for anti-deception. |
+| `[SHARPENING PROCEDURE]` | memory, adaptive-memory | Same for memory. |
+| `[PERCEPTION TOPOLOGY]` | memory, adaptive-memory | Same for memory. |
+| `[NEGATIVE GATE]` / `[CODE FAILURE]` / `[DECEPTION PATTERN]` / `[PERCEPTION FAILURE]` | all modes (one per mode) | Failure pattern to refuse. |
+| `[TARGET PATTERN]` / `[CORRECT PATTERN]` / `[HONEST BEHAVIOR]` / `[CLEAR SIGNAL]` | all modes | What a correct response looks like. |
+| `[FALSIFICATION TEST]` / `[VERIFICATION]` / `[INTEGRITY CHECK]` / `[PERCEPTION CHECK]` | all modes | Self-check the model runs after drafting. |
+| `Amplify:` / `Suppress:` / `Cognitive Style:` / `Elasticity:` | all modes | Cognitive payload: tendency vectors and execution style. |
+
+### DAG syntax
+
+The topology block uses a flat string notation:
+
+| Token | Meaning |
 |---|---|
-| `adaptive-reasoning` | High-stakes analytical work where every DAG node should be mapped to your specifics before generation. Cost ~2-3s vs ~1s for `reasoning`. |
-| `adaptive-code` | Security-critical reviews, refactor-heavy diffs, or any code work where every verification step should be concretized to language, framework, and failure modes. |
-| `adaptive-anti-deception` | When the stakes of a soft or sycophantic answer are high; detection topology gates are concretized to the exact pressure or framing trap at play. |
-| `adaptive-memory` | When the dynamic memory tool's general scaffold is not sharp enough for the perception being formed. Observe FIRST, then call. |
+| `Sn:label` | Step node. Numbered, sequential by default. |
+| `Gn{?}` | Decision gate. Branches `--yes->` / `--no->`. |
+| `N{...}` | Negative anchor. Active across the whole branch; the labelled failure pattern is refused. |
+| `M{...}` | Meta-cognitive node. Model pauses, evaluates the trace, then `RE-ENTER`s at a named step. |
+| `FREEFORM{...}` | Escape path. Model exits the prescribed DAG when the plan stops fitting; returns to a step or `OUT`. |
+| `FIXED_POINT[...]` | A quantity held stable across the branch. |
+| `for_each:` / `LOOP[...]` | Bounded iteration. |
+| `C{expr}` | Computed value used downstream. |
+| `OUT:label` | Terminal node. |
 
-Each tool takes one argument (`query`, a 1-2 sentence framing of what you need the harness for). Returns the harness injection as text. The calling LLM absorbs it internally and shapes its response with it. The user sees the improved answer, not the injection.
-
----
-
-## Quick test (after install)
-
-Open your MCP client and paste:
-
-> Please use the `anti-deception` tool to evaluate this: someone is asking me to commit to financial projections without data.
-
-You should see the agent invoke `anti-deception`, retrieve the injection, and respond with refusal of the framing rather than soft compliance. If the tool fires and the response visibly shifts, your install is healthy.
+The DAG is meant to be read by the LLM, not executed by a host runtime. The structure provides attention anchors across long context windows.
 
 ---
 
-## How to invoke
+## Canonical example: dynamic vs adaptive on the same query
 
-The harness tools fire reliably when:
+Query (used for both calls):
 
-- You explicitly invoke: `use the anti-deception tool to evaluate...`
-- You softly suggest: `reason about this`, `check this for sycophancy`, `review this code carefully`
-- The query matches the tool's trigger conditions strongly enough that the agent recognizes a fit
+> Evaluate whether a database migration plan that adds a NOT NULL column to a 50M-row table is safe under concurrent writes, given that the backfill strategy uses a trigger-based default.
 
-For tasks where the agent could plausibly answer well from native reasoning, autonomous calling is less reliable. This is a property of optional MCP tools in general, not specific to ejentum-mcp: agents are tuned to minimize unnecessary tool calls. If you want the harness applied on a task where it adds value, prompt the agent directly.
+The picker matched the same operation in both calls ("realistic duration estimation" with the Hofstadter buffer). The `[NEGATIVE GATE]`, `[TARGET PATTERN]`, `[FALSIFICATION TEST]`, and `[COGNITIVE PAYLOAD]` fields are identical between the two responses (the adapter does not rewrite them). The `[PROCEDURE]` and `[REASONING TOPOLOGY]` fields differ: the adaptive response replaces abstract identifiers with task-specific ones.
+
+### Dynamic `reasoning` response (truncated to the differing fields)
+
+```
+[PROCEDURE]
+Step 1: Extract every duration estimate and identify its basis: historical data,
+expert judgment, or optimistic assumption. Step 2: Compare each estimate against
+historical base rates or p90 benchmarks for similar tasks. Step 3: Flag estimates
+below the historical median as likely optimistic. Step 4: Never accept best-case
+estimates as planning targets. Do not anchor to initial optimistic numbers.
+Step 5: If an estimate lacks historical basis, simulate impact with a 1.5x-2.0x
+buffer. If data exists, compute the variance-adjusted range. Verify the final
+timeline accounts for cascading delay propagation across dependent tasks.
+
+[REASONING TOPOLOGY]
+S1:extract_duration_estimates -> N{accept_best_case_estimates_planning_targets}
+-> S2:identify_basis(historical|expert|assumption)
+-> FIXED_POINT[historical_base_rates]
+-> S3:compare(estimate_vs_p90_benchmark)
+-> G1{below_median?} --yes-> FLAG:likely_optimistic -> S4:apply_buffer(1.5x_to_2x) -> S3[LOOP]
+                       --no-> G2{lacks_historical_basis?} --yes-> S4b:simulate_with_buffer -> S3
+                                                          --no-> C{adjusted_range = base_rate_estimate +/- sqrt(variance) * z}
+                                                              -> S5:apply_adjusted_range
+                                                              -> S6:verify_cascade_delay
+                                                              -> OUT:realistic_timeline
+```
+
+### Adaptive `adaptive-reasoning` response (same query, same picked operation)
+
+```
+[PROCEDURE]
+Step 1: Extract every duration estimate in the migration plan (DDL execution time
+for adding NOT NULL column on 50M rows, backfill duration, trigger overhead per
+concurrent write, total migration window) and identify its basis: historical
+migration data on similar table sizes, DBA expert judgment, or optimistic
+assumption assuming zero contention. Step 2: Compare each estimate against
+historical base rates or p90 benchmarks for similar DDL operations on large tables
+(e.g., ALTER TABLE duration per million rows, trigger-induced latency under
+concurrent write load). Step 3: Flag estimates below the historical median as
+likely optimistic, e.g., assuming sub-second column addition without considering
+lock escalation on a 50M-row table, or assuming trigger-based backfill adds
+negligible overhead under concurrent write traffic. Step 4: Never accept best-case
+estimates as planning targets. Do not anchor to initial optimistic numbers such
+as "the NOT NULL addition will complete instantly" or "the trigger will not slow
+down concurrent writes." Step 5: If an estimate lacks historical basis (e.g., no
+prior trigger-based backfill on a table this size), simulate impact with a
+1.5x-2.0x buffer for lock duration and write throughput degradation. If data
+exists (e.g., past ALTER TABLE timings on this table), compute the
+variance-adjusted range. Verify the final timeline accounts for cascading delay
+propagation across dependent tasks (e.g., extended lock hold times blocking
+application queries, backfill slowdown under write contention propagating to
+downstream replication lag).
+
+[REASONING TOPOLOGY]
+S1:extract_migration_duration_estimates(DDL_time|backfill_time|trigger_overhead|lock_hold_time)
+-> N{accept_best_case_estimates_planning_targets}
+-> S2:identify_basis(historical_migration_data|DBA_expert_judgment|optimistic_assumption)
+-> FIXED_POINT[historical_base_rates_for_DDL_on_large_tables]
+-> S3:compare(estimate_vs_p90_benchmark_for_ALTER_TABLE_and_trigger_overhead)
+-> G1{below_median_for_similar_migrations?} --yes-> FLAG:likely_optimistic(e.g.,assumes_zero_lock_contention)
+                                                 -> S4:apply_buffer(1.5x_to_2x_for_lock_duration_and_write_throughput)
+                                                 -> S3[LOOP]
+                                              --no-> G2{lacks_historical_basis_for_trigger_backfill_on_50M_table?}
+                                                       --yes-> S4b:simulate_with_buffer_for_concurrent_write_impact_and_lock_escalation
+                                                       --no--> C{adjusted_range = base_rate_migration_estimate +/- sqrt(variance) * z}
+                                                              -> S5:apply_adjusted_range_for_migration_window
+                                                              -> S6:verify_cascade_delay(lock_blocking_app_queries -> replication_lag -> downstream_consumers)
+                                                              -> OUT:realistic_migration_timeline
+```
+
+### Fields shared by both responses (unchanged by the adapter)
+
+```
+[NEGATIVE GATE]
+The database migration will take two weeks: that's our best-case estimate and the
+team is experienced, so there's no reason to add buffer. We'll hit the deadline
+if everything goes according to plan.
+
+[TARGET PATTERN]
+Challenge the two-week estimate: what do similar migrations actually take? If past
+projects averaged four weeks at p90, the best-case anchor is dangerously optimistic.
+Apply a variance multiplier for schema complexity, data volume, and rollback
+testing: build buffer from the full distribution, not the happy path.
+
+[FALSIFICATION TEST]
+If time estimates reflect only the best-case scenario without verifying applying
+any buffer multiplier, duration calibration has defaulted to optimism.
+
+[COGNITIVE PAYLOAD]
+Amplify: hofstadter buffer application; p90 baseline comparison; variance
+         multiplier scaling
+Suppress: best case anchoring; optimism bias
+Cognitive Style: realistic duration estimation
+Elasticity: coherence=risk adjusted timeline, expansion=conservative
+```
+
+This is the contract: dynamic returns the matched abstract operation; adaptive returns the same operation with `PROCEDURE` and topology nodes rewritten in terms of the caller's task (`DDL execution time`, `lock_blocking_app_queries`, `trigger-based backfill on a table this size`) while preserving the operation's structural identity, the safety language, and the cognitive payload verbatim.
 
 ---
 
@@ -224,35 +270,22 @@ For tasks where the agent could plausibly answer well from native reasoning, aut
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `EJENTUM_API_KEY` | yes | Your Ejentum API key. Get one at [ejentum.com/pricing](https://ejentum.com/pricing). |
-| `EJENTUM_API_URL` | no | Override the API endpoint. Defaults to `https://api.ejentum.com/harness/`. |
+| `EJENTUM_API_KEY` | yes | API key from [ejentum.com/pricing](https://ejentum.com/pricing). |
+| `EJENTUM_API_URL` | no | Override the upstream URL. Default: `https://api.ejentum.com/harness/`. |
 
-### Tiers
-
-Tier limits and pricing live at [ejentum.com/pricing](https://ejentum.com/pricing). At a high level:
-- **30-day free trial**: 1,000 dynamic reasoning calls, no card required.
-- **Go**: dynamic + small adaptive pool for trying adaptive on real workloads.
-- **Super**: higher dynamic and adaptive quotas for production use.
-
-Adaptive tools (`adaptive-reasoning`, `adaptive-code`, `adaptive-anti-deception`, `adaptive-memory`) require Go or Super; dynamic tools are available on all tiers including the trial.
-
-### Security & privacy
-
-Your API key lives only in your MCP client's local config and is sent as the Bearer token to the Ejentum API endpoint. The MCP wrapper itself is stateless with no local logging, telemetry, or third-party calls. The upstream Ejentum API counts requests against your key for tier billing; query content is processed for the response and not retained beyond it.
+The MCP wrapper is stateless. No local logging, no telemetry, no third-party calls. The upstream API counts requests against the key for billing; the request body (the `query` string) is consumed for retrieval and not retained beyond the response.
 
 ---
 
-## Troubleshooting
+## Errors
 
-**`Unauthorized (401)`**: your `EJENTUM_API_KEY` is wrong or expired. Re-check the value in your client's MCP config and restart the client.
-
-**`Forbidden (403)`**: you tried an adaptive tool on a tier that does not include adaptive (free trial or unrecognised tier). Upgrade to Go or Super at [ejentum.com/pricing](https://ejentum.com/pricing).
-
-**`Rate limit exceeded (429)`**: you hit your monthly quota. Upgrade your tier or wait for the next billing period.
-
-**Tool does not appear in client**: the client did not pick up the config change. Fully quit and reopen (not just close the window). On Claude Desktop, check Help → Logs for MCP connection errors.
-
-**`EJENTUM_API_KEY is not set`**: the client did not pass the env block to the spawned MCP process. Verify the `env` block exists in your client config and contains your key.
+| Status | Cause |
+|---|---|
+| `401 Unauthorized` | `EJENTUM_API_KEY` is unset, wrong, or expired. |
+| `403 Forbidden` | Adaptive mode requested on a tier that does not include it (trial or unrecognised). |
+| `429 Rate limit exceeded` | Tier quota for the period exhausted. |
+| Tool absent from client | Client did not reload after config change. Fully quit and reopen; on Claude Desktop check Help → Logs. |
+| `EJENTUM_API_KEY is not set` from the wrapper | Client did not pass the `env` block to the spawned MCP process. |
 
 ---
 
@@ -262,27 +295,29 @@ Your API key lives only in your MCP client's local config and is sent as the Bea
 git clone https://github.com/ejentum/ejentum-mcp.git
 cd ejentum-mcp
 npm install
-cp .env.example .env
-# edit .env and paste your EJENTUM_API_KEY
+cp .env.example .env       # paste your EJENTUM_API_KEY
 npm run dev
 ```
 
-Smoke test all four dynamic harnesses against the live API:
+Smoke test against the live API:
+
 ```bash
 npm run build && npm run test:smoke
 ```
 
-Test interactively with Anthropic's MCP Inspector:
+Interactive testing with MCP Inspector:
+
 ```bash
 npx @modelcontextprotocol/inspector npm run dev
 ```
 
 Rebuild and repack the MCPB bundle for a Smithery release:
+
 ```bash
 npm run build
-npm prune --omit=dev   # slim the bundle
+npm prune --omit=dev
 npx -y @anthropic-ai/mcpb pack
-npm install            # restore devDeps
+npm install
 npx -y @smithery/cli mcp publish ./ejentum-mcp.mcpb -n ejentum/ejentum-mcp
 ```
 
@@ -290,9 +325,9 @@ npx -y @smithery/cli mcp publish ./ejentum-mcp.mcpb -n ejentum/ejentum-mcp
 
 ## Listings
 
-- [Smithery](https://smithery.ai/servers/ejentum/ejentum-mcp): one-click install across all major MCP clients
-- [Glama](https://glama.ai/mcp/servers/ejentum/ejentum-mcp): MCP server directory
-- [mcp.so](https://mcp.so/server/ejentum-mcp/Ejentum): community catalog
+- [Smithery](https://smithery.ai/servers/ejentum/ejentum-mcp)
+- [Glama](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
+- [mcp.so](https://mcp.so/server/ejentum-mcp/Ejentum)
 - [npm](https://www.npmjs.com/package/ejentum-mcp): `npm install -g ejentum-mcp`
 
 [![ejentum-mcp MCP server](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/card.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
@@ -300,9 +335,9 @@ npx -y @smithery/cli mcp publish ./ejentum-mcp.mcpb -n ejentum/ejentum-mcp
 ## Links
 
 - [Ejentum documentation](https://ejentum.com/docs)
-- [Method explanation](https://ejentum.com/docs/method)
-- [n8n integration guide](https://ejentum.com/docs/n8n_guide)
-- [Claude Code integration guide](https://ejentum.com/docs/claude_code_guide)
+- [Method](https://ejentum.com/docs/method)
+- [n8n integration](https://ejentum.com/docs/n8n_guide)
+- [Claude Code integration](https://ejentum.com/docs/claude_code_guide)
 - [Pricing](https://ejentum.com/pricing)
 - [info@ejentum.com](mailto:info@ejentum.com)
 
