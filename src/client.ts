@@ -3,7 +3,7 @@
  * so the `anti-deception` field name cannot silently break via dot access.
  */
 
-const DEFAULT_API_URL = "https://ejentum-main-ab125c3.zuplo.app/logicv1/";
+const DEFAULT_API_URL = "https://api.ejentum.com/harness";
 
 export type HarnessMode =
   | "reasoning"
