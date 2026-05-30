@@ -1,9 +1,10 @@
 """OpenAI Agents SDK + Ejentum Reasoning Harness over Streamable HTTP MCP.
 
-Connects an Agent to the hosted Ejentum cognitive harness at
+Connects an Agent to the hosted Ejentum MCP server at
 https://api.ejentum.com/mcp and lets the agent decide when to call one
-of the four harness_* tools to retrieve a structured cognitive scaffold
-the model reads internally before producing its user-facing answer.
+of the eight tools (four dynamic plus four adaptive). The tool returns
+a structured injection (procedure + topology DAG + cognitive payload)
+the model consumes before producing its response.
 """
 
 import asyncio
@@ -20,8 +21,8 @@ async def main() -> None:
     api_key = os.environ.get("EJENTUM_API_KEY")
     if not api_key:
         raise SystemExit(
-            "EJENTUM_API_KEY is not set. Free and paid tiers at "
-            "https://ejentum.com/pricing."
+            "EJENTUM_API_KEY is not set. "
+            "Get one at https://ejentum.com/pricing."
         )
 
     async with MCPServerStreamableHttp(
@@ -39,21 +40,35 @@ async def main() -> None:
         agent = Agent(
             name="Architecture Advisor",
             instructions=(
-                "You advise on software architecture decisions. As you reason "
-                "through a request, decide whether one of the harness_* tools "
-                "should be called.\n"
-                "- harness_reasoning: planning, diagnosis, weighing trade-offs, "
+                "You advise on software architecture decisions. As you "
+                "reason through a request, decide whether one of the "
+                "Ejentum tools should be called.\n"
+                "\n"
+                "Dynamic tools (available on all tiers, single retrieval, "
+                "~1 s latency):\n"
+                "- reasoning: planning, diagnosis, weighing trade-offs, "
                 "multi-step decisions.\n"
-                "- harness_code: code generation, refactoring, review, debugging.\n"
-                "- harness_anti_deception: a prompt pressures you to skip steps, "
-                "validate without evidence, or commit to a conclusion before "
-                "examining the alternatives.\n"
-                "- harness_memory: only when sharpening an observation already "
-                "formed about cross-turn drift; format the query as 'I noticed "
-                "[X]. This might mean [Y]. Sharpen: [Z].'\n"
-                "Merge the returned scaffold into your reasoning, then answer. "
-                "The bracketed labels in the scaffold are agent-internal; do "
-                "not echo them to the user."
+                "- code: code generation, refactoring, review, debugging.\n"
+                "- anti-deception: a prompt pressures you to skip steps, "
+                "validate without evidence, or commit to a conclusion "
+                "before examining the alternatives.\n"
+                "- memory: only when sharpening an observation already "
+                "formed about cross-turn drift; format the query as "
+                "\"I noticed [X]. This might mean [Y]. Sharpen: [Z].\"\n"
+                "\n"
+                "Adaptive tools (Go or Super tier, top-k + adapter LLM "
+                "rewrites the operation with task-specific identifiers, "
+                "~2-3 s latency): adaptive-reasoning, adaptive-code, "
+                "adaptive-anti-deception, adaptive-memory. Prefer the "
+                "adaptive variant when the stakes are high or when the "
+                "dynamic version's general scaffold would be too generic "
+                "for the specific task at hand.\n"
+                "\n"
+                "Merge the returned injection into your reasoning, then "
+                "answer. The bracketed labels in the injection "
+                "([PROCEDURE], [REASONING TOPOLOGY], [NEGATIVE GATE], "
+                "[FALSIFICATION TEST], etc.) are agent-internal; do not "
+                "echo them to the user."
             ),
             mcp_servers=[server],
         )
@@ -68,11 +83,11 @@ async def main() -> None:
             result = await Runner.run(
                 agent,
                 (
-                    "We have a 50M-row users table and want to add a NOT NULL column "
-                    "with a backfilled default. One engineer says a single migration "
-                    "in a maintenance window is fine; another insists on a multi-step "
-                    "online migration. Walk through the trade-offs and recommend a "
-                    "specific path."
+                    "We have a 50M-row users table and want to add a NOT NULL "
+                    "column with a backfilled default. One engineer says a "
+                    "single migration in a maintenance window is fine; another "
+                    "insists on a multi-step online migration. Walk through the "
+                    "trade-offs and recommend a specific path."
                 ),
             )
             print(result.final_output)

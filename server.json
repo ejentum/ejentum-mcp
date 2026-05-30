@@ -1,24 +1,24 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.ejentum/ejentum-mcp",
-  "description": "Reasoning, code, anti-deception, memory harness tools. Stdio (npx) or HTTPS (api.ejentum.com/mcp).",
+  "description": "Ejentum MCP server. Eight tools (four dynamic: reasoning, code, anti-deception, memory; four adaptive: adaptive-reasoning, adaptive-code, adaptive-anti-deception, adaptive-memory) that retrieve task-matched cognitive operations the agent reads before generating. Adaptive tools require the Go or Super tier.",
   "repository": {
     "url": "https://github.com/ejentum/ejentum-mcp",
     "source": "github"
   },
-  "version": "0.1.11",
+  "version": "0.2.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "ejentum-mcp",
-      "version": "0.1.11",
+      "version": "0.2.0",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
           "name": "EJENTUM_API_KEY",
-          "description": "Ejentum Logic API key. Get one at https://ejentum.com/pricing (free tier: 100 calls).",
+          "description": "Ejentum API key. Get one at https://ejentum.com/pricing (30-day free trial; Go or Super tier required for adaptive tools).",
           "isRequired": true,
           "format": "string",
           "isSecret": true
@@ -33,7 +33,7 @@
       "headers": [
         {
           "name": "Authorization",
-          "description": "Bearer token with EJENTUM_API_KEY. Get one at https://ejentum.com/pricing (free tier: 100 calls).",
+          "description": "Bearer token with EJENTUM_API_KEY. Get one at https://ejentum.com/pricing (30-day free trial; Go or Super tier required for adaptive tools).",
           "isRequired": true,
           "format": "string",
           "isSecret": true

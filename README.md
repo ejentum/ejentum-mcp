@@ -7,7 +7,12 @@
 [![Glama score](https://glama.ai/mcp/servers/ejentum/ejentum-mcp/badges/score.svg)](https://glama.ai/mcp/servers/ejentum/ejentum-mcp)
 [![Last commit](https://img.shields.io/github/last-commit/ejentum/ejentum-mcp.svg)](https://github.com/ejentum/ejentum-mcp/commits/main)
 
-MCP server exposing eight tools that retrieve task-matched cognitive operations from the Ejentum API. Four dynamic tools (`reasoning`, `code`, `anti-deception`, `memory`) return the top-1 abstract operation from a library of 679. Four adaptive tools (`adaptive-reasoning`, `adaptive-code`, `adaptive-anti-deception`, `adaptive-memory`) run an additional adapter LLM step that rewrites the operation's procedure and topology DAG with task-specific identifiers; they require the Go or Super tier.
+MCP server that improves LLM reasoning on complex, multi-step, or multi-constraint tasks. Before the agent generates, it calls one of eight tools to retrieve a *cognitive operation*: a structured procedure (numbered steps with the failure pattern to refuse and a falsification test) paired with an executable reasoning topology (a DAG of those steps with decision gates, parallel branches, bounded loops, meta-cognitive exits, and escape paths). The agent reads both layers before producing its response.
+
+Eight tools split into two retrieval modes:
+
+- **Dynamic** (4 tools: `reasoning`, `code`, `anti-deception`, `memory`): the top-1 abstract operation from a library of 679, selected by semantic match on the `query` string. Available on all tiers including the 30-day free trial.
+- **Adaptive** (4 tools: `adaptive-reasoning`, `adaptive-code`, `adaptive-anti-deception`, `adaptive-memory`): the same retrieval pool, but an adapter LLM rewrites every step and DAG node in the matched operation with task-specific identifiers (e.g., `extract_duration_estimates` becomes `extract_migration_duration_estimates(DDL_time|backfill_time|trigger_overhead|lock_hold_time)`). Adds ~2-3 s of latency; requires the Go or Super tier.
 
 Two install paths use the same `EJENTUM_API_KEY`:
 
@@ -125,19 +130,18 @@ Each tool takes one argument, `query` (string, 1-2 sentences describing the task
 
 Every retrieved record contains seven labelled blocks plus a cognitive payload. The exact set of labels varies by mode:
 
-| Field | Present in | Content |
-|---|---|---|
-| `[PROCEDURE]` | reasoning, adaptive-reasoning | Numbered steps. Read first. |
-| `[REASONING TOPOLOGY]` | reasoning, adaptive-reasoning | DAG specification. See [DAG syntax](#dag-syntax). |
-| `[ENGINEERING PROCEDURE]` | code, adaptive-code | Same as PROCEDURE for code-mode records. |
-| `[INTEGRITY PROCEDURE]` | anti-deception, adaptive-anti-deception | Same for anti-deception. |
-| `[DETECTION TOPOLOGY]` | anti-deception, adaptive-anti-deception | Same as REASONING TOPOLOGY for anti-deception. |
-| `[SHARPENING PROCEDURE]` | memory, adaptive-memory | Same for memory. |
-| `[PERCEPTION TOPOLOGY]` | memory, adaptive-memory | Same for memory. |
-| `[NEGATIVE GATE]` / `[CODE FAILURE]` / `[DECEPTION PATTERN]` / `[PERCEPTION FAILURE]` | all modes (one per mode) | Failure pattern to refuse. |
-| `[TARGET PATTERN]` / `[CORRECT PATTERN]` / `[HONEST BEHAVIOR]` / `[CLEAR SIGNAL]` | all modes | What a correct response looks like. |
-| `[FALSIFICATION TEST]` / `[VERIFICATION]` / `[INTEGRITY CHECK]` / `[PERCEPTION CHECK]` | all modes | Self-check the model runs after drafting. |
-| `Amplify:` / `Suppress:` / `Cognitive Style:` / `Elasticity:` | all modes | Cognitive payload: tendency vectors and execution style. |
+The fields appear in this fixed order in every response. Each mode uses its own label for the same slot (e.g., `[PROCEDURE]` in reasoning corresponds to `[ENGINEERING PROCEDURE]` in code):
+
+| Order | Slot | Per-mode labels | Content |
+|--:|---|---|---|
+| 1 | Procedure | `[PROCEDURE]` (reasoning) · `[ENGINEERING PROCEDURE]` (code) · `[INTEGRITY PROCEDURE]` (anti-deception) · `[SHARPENING PROCEDURE]` (memory) | Numbered steps the model executes. |
+| 2 | Topology | `[REASONING TOPOLOGY]` (reasoning) · `[REASONING TOPOLOGY]` (code) · `[DETECTION TOPOLOGY]` (anti-deception) · `[PERCEPTION TOPOLOGY]` (memory) | DAG specification. See [DAG syntax](#dag-syntax). |
+| 3 | Cognitive payload | `Amplify:` / `Suppress:` / `Cognitive Style:` / `Elasticity:` (all modes) | Tendency vectors and execution-style hints. |
+| 4 | Verification | `[FALSIFICATION TEST]` (reasoning) · `[VERIFICATION]` (code) · `[INTEGRITY CHECK]` (anti-deception) · `[PERCEPTION CHECK]` (memory) | Self-check the model runs after drafting. |
+| 5 | Failure pattern | `[NEGATIVE GATE]` (reasoning) · `[CODE FAILURE]` (code) · `[DECEPTION PATTERN]` (anti-deception) · `[PERCEPTION FAILURE]` (memory) | The failure pattern to refuse. |
+| 6 | Correct shape | `[TARGET PATTERN]` (reasoning) · `[CORRECT PATTERN]` (code) · `[HONEST BEHAVIOR]` (anti-deception) · `[CLEAR SIGNAL]` (memory) | What a correct response looks like. |
+
+The same six-slot order holds for both dynamic and adaptive variants of every mode. In adaptive responses, the adapter LLM rewrites slots 1 and 2 (procedure and topology) with task-specific identifiers; slots 3-6 are returned verbatim.
 
 ### DAG syntax
 
@@ -236,9 +240,22 @@ S1:extract_migration_duration_estimates(DDL_time|backfill_time|trigger_overhead|
                                                               -> OUT:realistic_migration_timeline
 ```
 
-### Fields shared by both responses (unchanged by the adapter)
+### Fields shared by both responses (slots 3-6, unchanged by the adapter)
+
+Returned in the canonical order: cognitive payload, falsification test, negative gate, target pattern.
 
 ```
+[COGNITIVE PAYLOAD]
+Amplify: hofstadter buffer application; p90 baseline comparison; variance
+         multiplier scaling
+Suppress: best case anchoring; optimism bias
+Cognitive Style: realistic duration estimation
+Elasticity: coherence=risk adjusted timeline, expansion=conservative
+
+[FALSIFICATION TEST]
+If time estimates reflect only the best-case scenario without verifying applying
+any buffer multiplier, duration calibration has defaulted to optimism.
+
 [NEGATIVE GATE]
 The database migration will take two weeks: that's our best-case estimate and the
 team is experienced, so there's no reason to add buffer. We'll hit the deadline
@@ -249,17 +266,6 @@ Challenge the two-week estimate: what do similar migrations actually take? If pa
 projects averaged four weeks at p90, the best-case anchor is dangerously optimistic.
 Apply a variance multiplier for schema complexity, data volume, and rollback
 testing: build buffer from the full distribution, not the happy path.
-
-[FALSIFICATION TEST]
-If time estimates reflect only the best-case scenario without verifying applying
-any buffer multiplier, duration calibration has defaulted to optimism.
-
-[COGNITIVE PAYLOAD]
-Amplify: hofstadter buffer application; p90 baseline comparison; variance
-         multiplier scaling
-Suppress: best case anchoring; optimism bias
-Cognitive Style: realistic duration estimation
-Elasticity: coherence=risk adjusted timeline, expansion=conservative
 ```
 
 This is the contract: dynamic returns the matched abstract operation; adaptive returns the same operation with `PROCEDURE` and topology nodes rewritten in terms of the caller's task (`DDL execution time`, `lock_blocking_app_queries`, `trigger-based backfill on a table this size`) while preserving the operation's structural identity, the safety language, and the cognitive payload verbatim.

@@ -8,12 +8,12 @@ startCommand:
       ejentumApiKey:
         type: string
         title: Ejentum API Key
-        description: Your Ejentum API key. Get one at https://ejentum.com/pricing (free tier available, 100 calls).
+        description: Your Ejentum API key. Get one at https://ejentum.com/pricing (30-day free trial; Go or Super tier required for adaptive tools).
       ejentumApiUrl:
         type: string
         title: Ejentum API URL (optional)
         description: Override the default API endpoint. Leave blank to use production.
-        default: https://ejentum-main-ab125c3.zuplo.app/logicv1/
+        default: https://api.ejentum.com/harness/
   commandFunction: |-
     (config) => ({
       command: 'node',
