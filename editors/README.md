@@ -32,6 +32,6 @@ Install the MCP server: Cline sidebar → MCP Servers → Edit MCP Settings → 
 
 ## Background
 
-Full walkthrough with screenshots: https://ejentum.com/docs/claude_code_guide.
+Full walkthrough with screenshots: https://ejentum.com/docs/quickstart.
 
 The eight tools are documented in the project root README and the [`skills/`](../skills) directory.

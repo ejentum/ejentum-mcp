@@ -53,7 +53,7 @@ End-to-end load behavior has been verified on Claude Code; other clients are lis
 
 ### (B) Workspace drop (per-project)
 
-Copy the four skill directories into the project's `.claude/skills/` directory and add a `CLAUDE.md` to the project root pointing Claude Code at them. The [Claude Code walkthrough](https://ejentum.com/docs/claude_code_guide) shows the exact pattern.
+Copy the four skill directories into the project's `.claude/skills/` directory and add a `CLAUDE.md` to the project root pointing Claude Code at them. The [Claude Code walkthrough](https://ejentum.com/docs/quickstart) shows the exact pattern.
 
 ## Validation
 
@@ -80,4 +80,4 @@ Free tier: 100 calls. Get a key at https://ejentum.com.
 
 ## Source
 
-Canonical install walkthrough (Claude Code, with screenshots): [ejentum.com/docs/claude_code_guide](https://ejentum.com/docs/claude_code_guide).
+Canonical install walkthrough (Claude Code, with screenshots): [ejentum.com/docs/quickstart](https://ejentum.com/docs/quickstart).

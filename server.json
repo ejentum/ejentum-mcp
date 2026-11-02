@@ -1,7 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.ejentum/ejentum-mcp",
+  "title": "Ejentum",
   "description": "Reasoning, code, anti-deception, memory harness MCP tools. Stdio or HTTPS api.ejentum.com/mcp",
+  "websiteUrl": "https://ejentum.com",
   "repository": {
     "url": "https://github.com/ejentum/ejentum-mcp",
     "source": "github"

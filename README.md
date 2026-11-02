@@ -9,6 +9,8 @@
 
 MCP server that improves LLM reasoning on complex, multi-step, or multi-constraint tasks. Before the agent generates, it calls one of eight tools to retrieve a *cognitive operation*: a structured procedure (numbered steps with the failure pattern to refuse and a falsification test) paired with an executable reasoning topology (a DAG of those steps with decision gates, parallel branches, bounded loops, meta-cognitive exits, and escape paths). The agent reads both layers before producing its response.
 
+Powered by the [Ejentum Logic API](https://ejentum.com/). Works in Claude Desktop, Cursor, Windsurf, Claude Code, n8n, and any MCP-compatible client.
+
 Eight tools split into two retrieval modes:
 
 - **Dynamic** (4 tools: `reasoning`, `code`, `anti-deception`, `memory`): the top-1 abstract operation from a library of 679, selected by semantic match on the `query` string. Available on all tiers including the 30-day free trial.
@@ -329,10 +331,12 @@ npx @modelcontextprotocol/inspector npm run dev
 
 ## Links
 
+- [Ejentum](https://ejentum.com)
 - [Ejentum documentation](https://ejentum.com/docs)
-- [Method](https://ejentum.com/docs/method)
-- [n8n integration](https://ejentum.com/docs/n8n_guide)
-- [Claude Code integration](https://ejentum.com/docs/claude_code_guide)
+- [Quickstart Guide](https://ejentum.com/docs/quickstart)
+- [Method and Architecture Guide](https://ejentum.com/guide)
+- [Reasoning Abilities Catalog](https://ejentum.com/abilities)
+- [Reasoning Benchmarks](https://ejentum.com/benchmarks)
 - [Pricing](https://ejentum.com/pricing)
 - [info@ejentum.com](mailto:info@ejentum.com)
 
