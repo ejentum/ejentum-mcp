@@ -333,9 +333,10 @@ npx @modelcontextprotocol/inspector npm run dev
 
 - [Ejentum](https://ejentum.com)
 - [Ejentum documentation](https://ejentum.com/docs)
-- [Method](https://ejentum.com/docs/method)
-- [n8n integration](https://ejentum.com/docs/n8n_guide)
-- [Claude Code integration](https://ejentum.com/docs/claude_code_guide)
+- [Quickstart Guide](https://ejentum.com/docs/quickstart)
+- [Method and Architecture Guide](https://ejentum.com/guide)
+- [Reasoning Abilities Catalog](https://ejentum.com/abilities)
+- [Reasoning Benchmarks](https://ejentum.com/benchmarks)
 - [Pricing](https://ejentum.com/pricing)
 - [info@ejentum.com](mailto:info@ejentum.com)
 

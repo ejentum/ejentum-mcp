@@ -51,5 +51,5 @@ You can also import it into AutoGen Studio via the file picker (`Import from Fil
 
 - Project: <https://github.com/ejentum/ejentum-mcp> (MIT)
 - Pricing: <https://ejentum.com/pricing>
-- Walkthrough: <https://ejentum.com/docs/claude_code_guide>
+- Walkthrough: <https://ejentum.com/docs/quickstart>
 - "Under Pressure" research paper: <https://doi.org/10.5281/zenodo.19392715>
